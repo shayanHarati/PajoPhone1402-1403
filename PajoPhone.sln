@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PajoPhone", "PajoPhone\PajoPhone.csproj", "{51B8A9E5-FBAF-4AF4-BE59-F039D5E9D9D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PajoPhone.DataLayer", "PajoPhone.DataLayer\PajoPhone.DataLayer.csproj", "{2173A6EB-5E33-498F-972D-39B1A429AD01}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{51B8A9E5-FBAF-4AF4-BE59-F039D5E9D9D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51B8A9E5-FBAF-4AF4-BE59-F039D5E9D9D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51B8A9E5-FBAF-4AF4-BE59-F039D5E9D9D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51B8A9E5-FBAF-4AF4-BE59-F039D5E9D9D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2173A6EB-5E33-498F-972D-39B1A429AD01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2173A6EB-5E33-498F-972D-39B1A429AD01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2173A6EB-5E33-498F-972D-39B1A429AD01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2173A6EB-5E33-498F-972D-39B1A429AD01}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
