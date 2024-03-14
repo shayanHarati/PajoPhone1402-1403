@@ -1,3 +1,5 @@
+using System.IO;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PajoPhone.DataLayer.Interfaces;
 using PajoPhone.ViewModels;
@@ -92,7 +94,7 @@ public class StoreController : Controller
             if (product == null )
             {
                 _createImage(model.Image, model.Product.Id);
-                model.Product.ImageProduct = model.Image.FileName;
+                model.Product.ImageProduct = model.Product.Id+ Path.GetExtension((string)model.Image.FileName);
                 _product.CreateProduct(model.Product);
             }
             else
@@ -138,9 +140,10 @@ public class StoreController : Controller
     }
     
     
-    [HttpPost]
+    [HttpGet]
     public IActionResult Filter(string productName, decimal productPriceMax, decimal productPriceMin )
     {
+        
         StoreViewModel model = new StoreViewModel()
         {
             ProductNameFilter = productName,

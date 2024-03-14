@@ -12,10 +12,10 @@
 <div class="grid grid-cols-1 md:grid-cols-5   p-2 ">
     <div class="filter p-3 md:col-span-2 lg:col-span-1">
         <p class="border-b-2 border-gray-800 p-3">فیلتر ها</p>
-        <form asp-action="Filter" asp-controller="Store">
+        <form asp-action="Filter" asp-controller="Store" method="get">
             <div class="flex flex-col  p-3">
                 <label asp-for="ProductNameFilter"></label>
-                <input class="mt-2 border border-gray-500 rounded p-1" type="text" name="productName" id="name">
+                <input class="mt-2 border border-gray-500 rounded p-1" type="text"  name="productName" >
             </div>
             @if (Model != null)
             {
@@ -74,6 +74,9 @@
             $("#max_amount").val(  ui.values[ 1 ]);
               }
             });
+            $( "#min_amount" ).val(  $( "#slider-range" ).slider( "values", 0 ) 
+                   );
+            $( "#max_amount" ).val($( "#slider-range" ).slider( "values", 1 ));  
             })
     </script>
     }

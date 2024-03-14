@@ -13,7 +13,7 @@
                                         <div>
                                             <img class="border-2 border-slate-300 p-1 rounded mx-auto" width="250px" src="/images/@Model.Product.ImageProduct" alt="">
                                             <input  asp-for="Product.ImageProduct" id="Image" value="@Model.Product.ImageProduct"  type="hidden">
-                                            <input name="Image" class="p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" asp-rout-model="@Model.Product.ImageProduct" id="Image" type="file" value="@Model.Product.ImageProduct">
+                                            <input name="Image"  class="p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" asp-rout-model="@Model.Product.ImageProduct" id="Image" type="file" value="@Model.Product.ImageProduct">
                                         </div>
                                     }
                                     else
@@ -21,7 +21,7 @@
                                         <div>
                                             <img src="/images/p1.jpg" alt="">
                                             <input value="Default.png" asp-for="Product.ImageProduct" type="hidden">
-                                            <input name="Image"  class="p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" asp-for="Product.ImageProduct" id="Image" type="file" value="Deault.png">
+                                            <input name="Image"   class="p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" asp-for="Product.ImageProduct" id="Image" type="file" value="Deault.png">
                                         </div>
                                     }
                                 }

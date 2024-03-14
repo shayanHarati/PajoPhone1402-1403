@@ -1,11 +1,13 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="/js/jquery-3.7.1.min.js"></script>
+    <script src="/js/jquery-ui.min.js"></script>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - PajoPhone</title>
     <link rel="stylesheet" href="/css/jquery-ui.css">
-  <link rel="stylesheet" href="/css/site.css">
+    <link rel="stylesheet" href="/css/site.css">
 </head>
 <body dir="rtl">
 <div class="bg-slate-950  border-b-2 border-white">
@@ -36,13 +38,13 @@
         <a asp-action="CreateOrEditProduct" asp-controller="Store" class="ml-1 navbar-link text-white">افزودن کالا</a>
     </div>
 </div>
- @RenderBody()
+@RenderBody()
 
-<script src="js/jquery-3.7.1.min.js"></script>
-<script src="js/jquery-ui.min.js" ></script>
-<script src="js/typed.umd.js" ></script>
- <script src="js/typeSetting.js"></script>
-  <script>
+
+
+<script src="/js/typed.umd.js"></script>
+<script src="/js/typeSetting.js"></script>
+<script>
              $(document).ready(function () {
                  $("#filter").click(function () {
                      $.ajax({
