@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PajoPhone.DataLayer;
+using PajoPhone.DataLayer.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,7 @@ builder.Services.AddDbContext<Context>(
 
 #endregion
 
+builder.Services.AddScoped<IProduct, Product>();
 
 var app = builder.Build();
 

@@ -1,0 +1,13 @@
+@model PajoPhone.Datalayer.Models.Product
+
+<div class="w-screen h-screen bg-slate-950 flex justify-center items-center">
+    <form asp-controller="Store" asp-action="EditProductPrice">
+        <div class="flex-col flex">
+            <label class="text-center text-3xl text-slate-300 mb-5"> قیمت جدید برای محصول @(Model.ProductName) </label>
+            <input class="bg-slate-950 border-2 border-slate-300 text-2xl text-center text-slate-300" asp-for="@Model.ProductPrice" name="ProductPrice" type="text">
+        </div>
+        <div class="p-3">
+            <button  type="submit"  class="bg-slate-950 block text-center p-2 rounded text-white" asp-route-product="@Model.Id">ویرایش قیمت </button>
+        </div>
+    </form>
+</div>

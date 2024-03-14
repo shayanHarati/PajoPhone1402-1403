@@ -4,12 +4,60 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - PajoPhone</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/PajoPhone.styles.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="/css/jquery-ui.css">
+  <link rel="stylesheet" href="/css/site.css">
 </head>
-<body>
+<body dir="rtl">
+<div class="bg-slate-950  border-b-2 border-white">
+    <div class="w-11/12 m-auto   flex items-center justify-between">
+        <p class="text-white  p-1">سلام دوست عزیز به وب سایت ما خوش آمدی </p>
+        <ul class="flex">
+            <li>
+                <a href="#" class="media-link link">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="media-link link">
+                    <i class="fa-brands fa-youtube"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="media-link link">
+                    <i class="fa-brands fa-facebook"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="bg-slate-950  border-b-2 border-white">
+    <div class="w-11/12 m-auto py-4">
+        <a asp-action="Index" asp-controller="Store" class="ml-1 navbar-link text-white">خانه</a>
+        <a asp-action="CreateOrEditProduct" asp-controller="Store" class="ml-1 navbar-link text-white">افزودن کالا</a>
+    </div>
+</div>
+ @RenderBody()
 
+<script src="js/jquery-3.7.1.min.js"></script>
+<script src="js/jquery-ui.min.js" ></script>
+<script src="js/typed.umd.js" ></script>
+ <script src="js/typeSetting.js"></script>
+  <script>
+             $(document).ready(function () {
+                 $("#filter").click(function () {
+                     $.ajax({
+                         type: "POST",
+                         url: "Store/Filter/",
+                         success: function (data) {
+                             $("#Store").html(data);
+                         },
+                         error: function () {
+                             $("#result").html("An error occurred while processing your request.");
+                         }
+                     });
+                 });
+             });
+         </script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

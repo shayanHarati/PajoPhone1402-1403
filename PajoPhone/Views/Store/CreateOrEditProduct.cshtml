@@ -1,0 +1,72 @@
+@model CreateOrEditProductViewModel
+
+<div class="bg-slate-950 " style="height: 100vh;">
+    <div class="container   md:w-6/12 md:mx-auto  md:p-2">
+        <form enctype="multipart/form-data" asp-action="CreateOrEditProduct" asp-controller="Store" method="post" class="flex border-2 border-slate-600 lg:m-3 border-dotted flex-col xl:flex-row lg:justify-between">
+            <div>
+                <div class="flex flex-col">
+                                <label class="m-2 text-white" asp-for="Product.ImageProduct" for="Image"></label>
+                                @if (@Model != null)
+                                {
+                                    if (Model.Product.ImageProduct != null)
+                                    {
+                                        <div>
+                                            <img class="border-2 border-slate-300 p-1 rounded mx-auto" width="250px" src="/images/@Model.Product.ImageProduct" alt="">
+                                            <input  asp-for="Product.ImageProduct" id="Image" value="@Model.Product.ImageProduct"  type="hidden">
+                                            <input name="Image" class="p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" asp-rout-model="@Model.Product.ImageProduct" id="Image" type="file" value="@Model.Product.ImageProduct">
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div>
+                                            <img src="/images/p1.jpg" alt="">
+                                            <input value="Default.png" asp-for="Product.ImageProduct" type="hidden">
+                                            <input name="Image"  class="p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" asp-for="Product.ImageProduct" id="Image" type="file" value="Deault.png">
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <input value="p1.jpg" asp-for="Product.ImageProduct" type="hidden">
+                                    <input name="Image"   class="p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" asp-for="Image" id="Image" type="file">
+                                }
+                                <span class="error" asp-validation-for="Product.ImageProduct" ></span>
+                         </div>
+                <div class="flex flex-col">
+                            <div class="flex flex-col">
+                                <label class="m-2 text-white" asp-for="Product.ProductName" for="Name"></label>
+                                <input class="p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" asp-for="Product.ProductName" id="Name" type="text">
+                                <span class="error" asp-validation-for="Product.ProductName"></span>
+                            </div>
+                            <div class="flex flex-col">
+                                <label class="m-2 text-white" asp-for="Product.ProductPrice" for="Price"></label>
+                                <input class="p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" asp-for="Product.ProductPrice" id="Price" type="number" min="0">
+                            </div>
+                            <div class="flex flex-col">
+                                <label class="m-2 text-white" asp-for="Product.ProductColor" for="Color"></label>
+                                <input class="p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" asp-for="Product.ProductColor" id="Color" type="text">
+                                <span class="error" asp-validation-for="Product.ProductColor"></span>
+                            </div>
+                                   
+                        </div>
+            </div>
+            <div class="flex flex-col md:justify-around">
+                <div class="flex flex-col mb-2">
+                                <label class="m-2 text-white" asp-for="Product.ProductDescription" for="Description"></label>
+                                <textarea class="bg-slate-950 md:w-80 xs:mx-0 md:h-80 rounded border-2 border-slate-300 text-slate-300 w-11/12  m-2 md:mx-auto" style="resize: none;" asp-for="Product.ProductDescription" id="Description"></textarea>
+                                <span class="error" asp-validation-for="Product.ProductDescription"></span>
+                </div>
+                <div class="flex flex-col">
+                    @if (Model != null)
+                    {
+                        <button class="hover:bg-slate-600 w-11/12 m-2 p-1 rounded border-2 text-slate-300 hover:text-white border-slate-300" type="submit" asp-route-id="@Model.Product.Id">@ViewBag.state</button>
+                    }
+                    else
+                    {
+                        <button class="hover:bg-slate-600 w-11/12 m-2 p-1 rounded border-2 text-slate-300 hover:text-white border-slate-300" type="submit" >@ViewBag.state</button>
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

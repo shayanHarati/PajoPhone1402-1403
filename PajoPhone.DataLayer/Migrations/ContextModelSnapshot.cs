@@ -53,6 +53,40 @@ namespace PajoPhone.DataLayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ImageProduct = "p1.jpg",
+                            ProductColor = "مشکی",
+                            ProductName = "محصول 1",
+                            ProductPrice = 12000000m
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ImageProduct = "p1.jpg",
+                            ProductColor = "سفید",
+                            ProductName = "محصول 2",
+                            ProductPrice = 5000000m
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ImageProduct = "p1.jpg",
+                            ProductColor = "مشکی",
+                            ProductName = "محصول 3",
+                            ProductPrice = 20000000m
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ImageProduct = "p1.jpg",
+                            ProductColor = "مشکی",
+                            ProductName = "محصول 4",
+                            ProductPrice = 500000m
+                        });
                 });
 #pragma warning restore 612, 618
         }

@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+a:hover {
+    color: white;
+    text-decoration: none;
+}
+.text-blond {
+    color: #faa000 !important;
+}
+.border-blond {
+    border-color: #faa000 !important;
+}
+/* ============= Header ================ */
+.Header-top {
+    height: 40px;
+    background: #252525;
+}
+
+.Header-top .left {
+    display: flex;
+    justify-content: flex-end;
+    order: 2;
+}
+
+.Header-top .right {
+    order: 1;
+    text-align: right;
+}
+
+.Header-top .right p {
+    color: white;
+    font-weight: bold;
+}
+
+.header {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    background: url("../images/p1.jpg") !important;
+    height: 100vh;
+    position: relative;
+}
+
+.header:after {
+    content: "";
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.6);
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.typed {
+    z-index: 2;
+}
+
+.typed span,
+.header p {
+    z-index: 2;
+    font-size: 4rem;
+    color: white;
+    margin-bottom: 1.2rem;
+    font-weight: bold;
+}
+
+.typed span {
+    font-size: 2rem;
+    color: #faa000;
+}
+/* navbar */
+.navbar-link {
+    position: relative;
+}
+
+.navbar-link::before {
+    content: "";
+    position: absolute;
+    border-top: 2px solid #faa000;
+    width:0;
+    bottom: -15px;
+}
+.navbar-link:hover::before {
+    transition: all 0.3s ;
+    width:100%;
+}
+.link{
+    color:white;
+    font-size: 1rem;
+}
+.media-link{
+    margin-left: 1rem;
+}
+/* Validation form */
+.error{
+    color: red !important;
+}
