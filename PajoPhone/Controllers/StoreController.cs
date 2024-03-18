@@ -19,6 +19,7 @@ public class StoreController : Controller
     public IActionResult ShowStore(StoreViewModel model)
     {
         return View("Index",model);
+        // return RedirectToAction("Index");
     }
     public IActionResult ShowStore()
     {
@@ -37,7 +38,7 @@ public class StoreController : Controller
         {
             Products = _product.GetAllProducts()
         };
-        return ShowStore(model);
+        return ShowStore();
     }
     
     [HttpGet]
@@ -89,7 +90,7 @@ public class StoreController : Controller
         }
         if (ModelState.IsValid)
         {
-            
+            var extension =Path.GetExtension(model.Product.ImageProduct);
             // if product was not in database => we want creat it
             if (product == null )
             {
@@ -101,7 +102,8 @@ public class StoreController : Controller
             {
                 if (model.Product.ImageProduct != "p1.jpg")
                 {
-                    var imagepath = Path.Combine("wwwroot/images/", model.Product.ImageProduct);
+                   
+                    var imagepath = Path.Combine("wwwroot/images/", model.Product.Id.ToString()+extension );
                     if (System.IO.File.Exists(imagepath))
                     {
                         System.IO.File.Delete(imagepath);
@@ -109,7 +111,7 @@ public class StoreController : Controller
                 }
                 _createImage(model.Image,model.Product.Id);
                 // if product was  in database => we want update it
-                product.ImageProduct = model.Image.FileName;
+                product.ImageProduct = model.Product.Id.ToString()+extension;
                 product.ProductColor = model.Product.ProductColor;
                 product.ProductDescription = model.Product.ProductDescription;
                 product.ProductName = model.Product.ProductName;

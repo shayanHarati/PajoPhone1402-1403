@@ -40,7 +40,7 @@
                             </div>
                             <div class="flex flex-col">
                                 <label class="m-2 text-white" asp-for="Product.ProductPrice" for="Price"></label>
-                                <input class="p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" asp-for="Product.ProductPrice" id="Price" type="number" min="0">
+                                <input  class="numeric p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" asp-for="Product.ProductPrice" id="Price" type="text" min="0">
                             </div>
                             <div class="flex flex-col">
                                 <label class="m-2 text-white" asp-for="Product.ProductColor" for="Color"></label>
@@ -70,3 +70,4 @@
         </form>
     </div>
 </div>
+
