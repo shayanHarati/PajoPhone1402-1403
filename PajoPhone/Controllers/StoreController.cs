@@ -19,7 +19,6 @@ public class StoreController : Controller
     public IActionResult ShowStore(StoreViewModel model)
     {
         return View("Index",model);
-        // return RedirectToAction("Index");
     }
     public IActionResult ShowStore()
     {
@@ -97,6 +96,14 @@ public class StoreController : Controller
                 _createImage(model.Image, model.Product.Id);
                 model.Product.ImageProduct = model.Product.Id+ Path.GetExtension((string)model.Image.FileName);
                 _product.CreateProduct(model.Product);
+                
+                FilterViewModel filtermodel = new FilterViewModel()
+                {
+                    ProductName = model.Product.ProductName,
+                    ProductPriceMax = model.Product.ProductPrice,
+                    ProductPriceMin = model.Product.ProductPrice
+                };
+                return RedirectToAction("Filter", filtermodel);
             }
             else
             {
@@ -143,16 +150,17 @@ public class StoreController : Controller
     
     
     [HttpGet]
-    public IActionResult Filter(string productName, decimal productPriceMax, decimal productPriceMin )
+    public IActionResult Filter( FilterViewModel model )
     {
         
-        StoreViewModel model = new StoreViewModel()
+        StoreViewModel createdModel = new StoreViewModel()
         {
-            ProductNameFilter = productName,
-            ProductPriceMaximumFilter = productPriceMax,
-            ProductPriceMinimumFilter = productPriceMin,
-            Products = _product.FilterProducts(productName,productPriceMax,productPriceMin)
+            ProductNameFilter = model.ProductName,
+            ProductPriceMaximumFilter = model.ProductPriceMax,
+            ProductPriceMinimumFilter = model.ProductPriceMin,
+            Products = _product.FilterProducts(model.ProductName,
+                model.ProductPriceMax,model.ProductPriceMin)
         };
-        return ShowStore(model);
+        return ShowStore(createdModel);
     }
 }
