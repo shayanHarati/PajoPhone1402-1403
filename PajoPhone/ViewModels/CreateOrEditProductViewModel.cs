@@ -5,9 +5,31 @@ namespace PajoPhone.ViewModels;
 
 public class CreateOrEditProductViewModel
 {
-    public Product? Product { get; set; }
+    public int Id { get; set; }
+    
+    [Display(Name = "نام محصول")]
+    [Required(ErrorMessage =" {0} یک فیلد اجباری است" )]
+    [MaxLength(200,ErrorMessage = "حداکثر طول {0} باید {1} باشد")]
+    public required string ProductName { get; set; }
+    
+    [Display(Name = "توضیحات")]
+    public string? ProductDescription { get; set; }
+    
+    [Display(Name = "رنگ محصول")]
+    [Required(ErrorMessage =" {0} یک فیلد اجباری است" )]
+    [MaxLength(100,ErrorMessage = "حداکثر طول {0} باید {1} باشد")]
+    public required string ProductColor { get; set; }
+    
+    [Display(Name = "تصویر")]
+    [Required(ErrorMessage =" {0} یک فیلد اجباری است" )]
+    [MaxLength(200,ErrorMessage = "حداکثر طول {0} باید {1} باشد")]
+    public required string ImageProduct { get; set; }
+    
+    [Display(Name = "قیمت محصول")]
+    [Required(ErrorMessage =" {0} یک فیلد اجباری است" )]
+    [RegularExpression(@"(([0-9]{1,3})$)|(([0-9]{1,3}){0,1},([0-9]{3},)*([0-9]{3})(\.(0)+){0,1}$)|((([0-9])+))((\.(0)+){0,1})$",ErrorMessage = "مقدار نامعتبر است")]
+    public string ProductPrice { get; set; }
     
     [Required(ErrorMessage =" {0} یک فیلد اجباری است" )]
     public  IFormFile Image { get; set; }
-    public int id { get; set; }
 }

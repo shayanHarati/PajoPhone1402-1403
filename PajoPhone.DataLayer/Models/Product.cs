@@ -27,6 +27,7 @@ public class Product
     
     [Display(Name = "قیمت محصول")]
     [Required(ErrorMessage =" {0} یک فیلد اجباری است" )]
+    [RegularExpression(@"(([0-9]{1,3})$)|(([0-9]{1,3}){0,1},([0-9]{3},)*([0-9]{3})(\.(0)+){0,1}$)|((([0-9])+))((\.(0)+){0,1})$",ErrorMessage = "مقدار نامعتبر است")]
     public decimal ProductPrice { get; set; }
     
 }

@@ -54,7 +54,11 @@ public class StoreController : Controller
             // if product was  in database => we should update it
             CreateOrEditProductViewModel model = new CreateOrEditProductViewModel()
             {
-                Product = _product.GetById(id)
+                Id = _product.GetById(id).Id,
+                ProductName = _product.GetById(id).ProductName,
+                ImageProduct = _product.GetById(id).ImageProduct,
+                ProductColor = _product.GetById(id).ProductColor,
+                ProductPrice = (_product.GetById(id).ProductPrice).ToString().Replace(",","")
             };
             ViewBag.state = "ویرایش محصول";
             return View(model);
@@ -77,8 +81,8 @@ public class StoreController : Controller
     [HttpPost]
     public IActionResult CreateOrEditProduct(CreateOrEditProductViewModel model)
     {
-        model.Product.Id = model.id;
-        var product = _product.GetById(model.Product.Id);
+        model.Id = model.Id;
+        var product = _product.GetById(model.Id);
         if (product== null)
         {
             ViewBag.state = "افزودن محصول";
@@ -87,42 +91,51 @@ public class StoreController : Controller
         {
             ViewBag.state = "ویرایش محصول";
         }
+        
         if (ModelState.IsValid)
         {
-            var extension =Path.GetExtension(model.Product.ImageProduct);
+            var productmodel = new Product()
+            {
+                Id = model.Id,
+                ProductName = model.ProductName,
+                ImageProduct = model.ImageProduct,
+                ProductColor = model.ProductColor,
+                ProductPrice = Convert.ToDecimal(model.ProductPrice.Replace(",",""))
+            };
+            var extension =Path.GetExtension(model.ImageProduct);
             // if product was not in database => we want creat it
             if (product == null )
             {
-                _createImage(model.Image, model.Product.Id);
-                model.Product.ImageProduct = model.Product.Id+ Path.GetExtension((string)model.Image.FileName);
-                _product.CreateProduct(model.Product);
+                _createImage(model.Image, model.Id);
+                model.ImageProduct = model.Id+ Path.GetExtension((string)model.Image.FileName);
+                _product.CreateProduct(productmodel);
                 
                 FilterViewModel filtermodel = new FilterViewModel()
                 {
-                    ProductName = model.Product.ProductName,
-                    ProductPriceMax = model.Product.ProductPrice,
-                    ProductPriceMin = model.Product.ProductPrice
+                    ProductName = productmodel.ProductName,
+                    ProductPriceMax = productmodel.ProductPrice,
+                    ProductPriceMin = productmodel.ProductPrice
                 };
                 return RedirectToAction("Filter", filtermodel);
             }
             else
             {
-                if (model.Product.ImageProduct != "p1.jpg")
+                if (productmodel.ImageProduct != "p1.jpg")
                 {
                    
-                    var imagepath = Path.Combine("wwwroot/images/", model.Product.Id.ToString()+extension );
+                    var imagepath = Path.Combine("wwwroot/images/", productmodel.Id.ToString()+extension );
                     if (System.IO.File.Exists(imagepath))
                     {
                         System.IO.File.Delete(imagepath);
                     }
                 }
-                _createImage(model.Image,model.Product.Id);
+                _createImage(model.Image,productmodel.Id);
                 // if product was  in database => we want update it
-                product.ImageProduct = model.Product.Id.ToString()+extension;
-                product.ProductColor = model.Product.ProductColor;
-                product.ProductDescription = model.Product.ProductDescription;
-                product.ProductName = model.Product.ProductName;
-                product.ProductPrice = model.Product.ProductPrice;
+                product.ImageProduct = productmodel.Id.ToString()+extension;
+                product.ProductColor = productmodel.ProductColor;
+                product.ProductDescription = productmodel.ProductDescription;
+                product.ProductName =productmodel.ProductName;
+                product.ProductPrice = productmodel.ProductPrice;
                 _product.UpdateProduct(product);
             }
 
