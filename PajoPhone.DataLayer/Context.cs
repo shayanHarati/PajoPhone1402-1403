@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PajoPhone.Datalayer.Models;
+using PajoPhone.DataLayer.Models;
 
 namespace PajoPhone.DataLayer;
 
@@ -11,9 +12,31 @@ public class Context:DbContext
     }
 
     public DbSet<Product> Products { get; set; }
+    public DbSet<Field> Fields { get; set; }
+    public DbSet<FieldProduct> FieldProducts { get; set; }
+    public DbSet<Category> Category { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<FieldProduct>().HasOne<Product>(c => c.Product)
+            .WithMany(c => c.Fields)
+            .HasForeignKey(c => c.FieldId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<FieldProduct>().HasOne<Field>(c => c.Field)
+            .WithMany(c => c.Products)
+            .HasForeignKey(c => c.FieldId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Category>().HasData(
+            new Category()
+            {
+                Title = "موبایل",
+                Id = 1
+            }
+        );
+        
+        
         modelBuilder.Entity<Product>().HasData(
             new Product()
             {
@@ -21,7 +44,8 @@ public class Context:DbContext
                 ProductPrice = 12000000,
                 ProductColor = "مشکی",
                 ImageProduct = "p1.jpg",
-                Id = 1
+                Id = 1,
+                CategoryId = 1
             },
             new Product()
             {
@@ -29,7 +53,8 @@ public class Context:DbContext
                 ProductPrice = 5000000,
                 ProductColor = "سفید",
                 ImageProduct = "p1.jpg",
-                Id = 2
+                Id = 2,
+                CategoryId = 1
             },
             new Product()
             {
@@ -37,7 +62,8 @@ public class Context:DbContext
                 ProductPrice = 20000000,
                 ProductColor = "مشکی",
                 ImageProduct = "p1.jpg",
-                Id = 3
+                Id = 3,
+                CategoryId = 1
             },
             new Product()
             {
@@ -45,7 +71,8 @@ public class Context:DbContext
                 ProductPrice = 500000,
                 ProductColor = "مشکی",
                 ImageProduct = "p1.jpg",
-                Id = 4
+                Id = 4,
+                CategoryId = 1
             }
             
             );

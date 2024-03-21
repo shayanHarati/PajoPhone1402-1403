@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PajoPhone.DataLayer;
 
@@ -10,9 +11,11 @@ using PajoPhone.DataLayer;
 namespace PajoPhone.DataLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20240320140328_ParentCategoryId")]
+    partial class ParentCategoryId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,8 +32,8 @@ namespace PajoPhone.DataLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("PrentCategoryId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PrentCategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -44,6 +47,7 @@ namespace PajoPhone.DataLayer.Migrations
                         new
                         {
                             Id = 1,
+                            PrentCategoryId = 0,
                             Title = "موبایل"
                         });
                 });
