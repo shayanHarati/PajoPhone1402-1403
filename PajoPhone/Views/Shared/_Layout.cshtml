@@ -45,6 +45,19 @@
 
 <script src="/js/typed.umd.js"></script>
 <script src="/js/typeSetting.js"></script>
+<script >
+         $(document).ready(()=>{
+                    $("#filter").click(()=>{
+                        $.ajax({
+                        url: "/Store/Filter",
+                        method:"get"
+                        }).done((result)=>{
+                            debugger;
+                            })
+                        })
+                    })
+                    
+    </script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
