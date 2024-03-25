@@ -14,23 +14,23 @@
         <p class="border-b-2 border-gray-800 p-3">فیلتر ها</p>
         <form asp-action="Filter" asp-controller="Store" method="get">
             <div class="flex flex-col  p-3">
-                <label asp-for="ProductNameFilter"></label>
-                <input class="mt-2 border border-gray-500 rounded p-1" type="text"  name="productName" >
+                <label asp-for="Filter.ProductName"></label>
+                <input class="mt-2 border border-gray-500 rounded p-1" type="text"  asp-for="Filter.ProductName" >
             </div>
             @if (Model != null)
             {
                 <div class="flex flex-col  p-3">
-                    <label for="amount">قیمت کالا</label>
+                    <label for="amount" >قیمت کالا</label>
                     <div class="flex flex-row-reverse">
-                        <input class="w-6/12 text-left" type="text" id="min_amount" name="productPriceMin" readonly style="border:0; color:#f6931f; font-weight:bold;">
-                        <input class="w-6/12" type="text" id="max_amount" name="productPriceMax" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                        <input class="w-6/12 text-left" type="text" id="min_amount" asp-for="Filter.ProductPriceMin" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                        <input class="w-6/12" type="text" id="max_amount" asp-for="Filter.ProductPriceMax" readonly style="border:0; color:#f6931f; font-weight:bold;">
                     </div>
                     <div id="slider-range" class="mt-2"></div>
                 </div>
             }
             
             <div class="p-3">
-                <button  type="submit"  id="filter" class="bg-slate-950 block text-center p-2 rounded text-white" >جستجو</button>
+                <button  onclick="filter(@Model.Filter)"  id="filter" class="bg-slate-950 block text-center p-2 rounded text-white" >جستجو</button>
             </div>
         </form>
     </div>
@@ -67,8 +67,8 @@
               
             range: true,
             min: 0,
-            max:  @Model.Products.Max(c => c.ProductPrice), 
-            values: [ 0, @Model.Products.Max(c => c.ProductPrice) ],
+            max:  @Model.Filter.MaxPrice, 
+            values: [ 0, @Model.Filter.MaxPrice ],
             slide: function( event, ui ) {
             $( "#min_amount" ).val(  ui.values[ 0 ] );
             $("#max_amount").val(  ui.values[ 1 ]);
@@ -79,6 +79,13 @@
             $( "#max_amount" ).val($( "#slider-range" ).slider( "values", 1 ));  
             })
     </script>
+        <script>
+            function filter(filter){
+                var ajax = new XMLHttpRequest();
+                ajax.open("GET","{filter}",true)
+                ajax.send()
+                }
+        </script>
     }
 
 }
