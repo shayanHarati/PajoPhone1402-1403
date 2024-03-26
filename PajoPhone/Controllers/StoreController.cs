@@ -64,7 +64,8 @@ public class StoreController : Controller
                 ProductName = _product.GetById(id).ProductName,
                 ImageProduct = _product.GetById(id).ImageProduct,
                 ProductColor = _product.GetById(id).ProductColor,
-                ProductPrice = (_product.GetById(id).ProductPrice).ToString().Replace(",","")
+                ProductPrice = (_product.GetById(id).ProductPrice).ToString().Replace(",",""),
+                ProductDescription = _product.GetById(id).ProductDescription
             };
             ViewBag.state = "ویرایش محصول";
             return View(model);
@@ -106,6 +107,8 @@ public class StoreController : Controller
                 ProductName = model.ProductName,
                 ImageProduct = model.ImageProduct,
                 ProductColor = model.ProductColor,
+                ProductDescription = model.ProductDescription,
+                CategoryId = 1,
                 ProductPrice = Convert.ToDecimal(model.ProductPrice.Replace(",",""))
             };
             var extension =Path.GetExtension(model.ImageProduct);
@@ -124,6 +127,7 @@ public class StoreController : Controller
                     MaxPrice = _product.GetAllProducts().Select(c => c.ProductPrice).Max()
                     
                 };
+                
                 return RedirectToAction("Filter", filtermodel);
             }
             else
@@ -171,14 +175,14 @@ public class StoreController : Controller
     
     
     [HttpGet]
-    public IActionResult Filter( StoreViewModel model )
+    public IActionResult Filter( FilterViewModel model )
     {
-        var products = _product.FilterProducts(model.Filter.ProductName,
-            model.Filter.ProductPriceMax, model.Filter.ProductPriceMin);
+        var products = _product.FilterProducts(model.ProductName,
+            model.ProductPriceMax, model.ProductPriceMin);
         StoreViewModel createdModel = new StoreViewModel()
         {
             Products = products,
-            Filter = model.Filter,
+            Filter = model,
             
         };
         return ShowStore(createdModel);
