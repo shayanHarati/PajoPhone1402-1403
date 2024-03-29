@@ -11,6 +11,7 @@ public enum FieldType
 public class Field
 {
     public int Id { get; set; }
+    public string FieldTitle { get; set; }
     public FieldType Type { get; set; }
 
     #region Relations
