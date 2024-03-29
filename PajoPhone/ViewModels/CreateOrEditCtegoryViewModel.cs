@@ -12,9 +12,13 @@ public class CreateOrEditCtegoryViewModel
     [Display(Name = "عنوان دسته")]
     [Required(ErrorMessage = "{0} این فیلد ضروری است")]
     public string CategoryTitle { get; set; }
-    public List<Category> Categories { get; set; }
+    public List<Category>? Categories { get; set; }
     
-    [Display(Name = "دسته بندی والد")]
-    public string SelectedCategory { get; set; }
+    [Required(ErrorMessage = "لطفا حداقل یک دسته بندی را انتخاب کنید")]
+    
+
+    public List<int> SelectedCategories { get; set; }
+    
+    
     
 }

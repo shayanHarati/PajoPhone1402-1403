@@ -18,12 +18,14 @@ public class CategoryController : Controller
         CreateOrEditCtegoryViewModel model = new CreateOrEditCtegoryViewModel()
         {
             Categories = _category.GetAllCategories().ToList()
+
         };
+        
         return View(model);
     }
     
     [HttpPost]
-    public IActionResult CreateOrEditCategory(CreateOrEditProductViewModel model)
+    public IActionResult CreateOrEditCategory(CreateOrEditCtegoryViewModel model)
     {
         return View();
     }

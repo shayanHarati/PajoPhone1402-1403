@@ -7,7 +7,35 @@
                 <label class="p-3 text-white text-right w-full" asp-for="CategoryTitle" for=""></label>
                 <input  asp-for="CategoryTitle" class="p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" type="text">
             </div>
-            
+            <div id="categories" class="p-4">
+                @foreach (var level in Model.Categories.Select(c => c.Level).Distinct().Order())
+                {
+                    <div class="ul" level="@level">
+                        @foreach (var category in Model.Categories.Where(c => c.Level == level))
+                        {
+                            @if (Model.Categories.Any(c=>Convert.ToInt32(c.PrentCategoryId)==category.Id))
+                            {
+                                <details class="m-2" id="@category.Id" parent-id="@category.PrentCategoryId">
+                                    <summary class="text-white">
+                                       <input type="checkbox" name="SelectedCategories" value="@category.Id" id="@category.Title">
+                                        <label class="text-white" for="@category.Title">@category.Title</label>
+                                    </summary>
+                                </details>
+                            }
+                            else
+                            {
+                                <details class="m-2" id="@category.Id" parent-id="@category.PrentCategoryId">
+                                    <summary class="list-none text-white">
+                                        <input type="checkbox" name="SelectedCategories" value="@category.Id" id="@category.Title">
+                                        <label class="text-white" for="@category.Title">@category.Title</label>
+                                    </summary>
+                                </details>
+                            }
+                        }
+                    </div>
+                    
+                }
+            </div>
           
             <div class="flex flex-col items-center">
                 <button class="hover:bg-slate-600 w-11/12 m-2 p-1 rounded border-2 text-slate-300 hover:text-white border-slate-300 ">افزودن یک دسته جدید</button>
@@ -15,4 +43,7 @@
         </form>
     </div>
 </div>
-
+@section Scripts
+{
+    <script src="/js/AutomaticLists.js"></script>
+}
