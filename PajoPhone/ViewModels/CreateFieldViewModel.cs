@@ -5,10 +5,7 @@ public class CreateFieldViewModel
 {
     public CreateFieldViewModel()
     {
-        Fields = new List<Field>()
-        {
-            new Field()
-        };
+        Fields = new List<Field>();
     }
     public List<Field> Fields { get; set; }
 }
