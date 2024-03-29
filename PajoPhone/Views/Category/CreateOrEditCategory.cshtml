@@ -36,10 +36,9 @@
                     
                 }
             </div>
-            @* <partial name="Fields" for="Fields"/> *@
             <div id="fields">
                 <div class="field-item flex">
-                    <input class="p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" type="text" name="">
+                    <input class="p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" type="text" asp-for="Fields.Fields[0].FieldTitle">
                     
                     <button id="increase_btn" class="m-2 p-1 border-2 text-slate-300 hover:text-white border-slate-300 rounded hover:bg-slate-600 px-2"  type="button">+</button>
                     <button id="decrease_btn" class="m-2 p-1 border-2 text-slate-300 hover:text-white border-slate-300 rounded hover:bg-slate-600 px-2"  type="button">-</button>
@@ -63,7 +62,7 @@
                      $("#fields :last-child #increase_btn").remove()
                     let input=document.createElement("input")
                     $(input).addClass("p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300")
-                    $(input).attr("name","FieldTitle").attr("asp-for","Fields.FieldTitle").attr("type","text")
+                    $(input).attr("name","FieldTitle").attr("name","Fields.Fields["+$(fields).children().length+"].FieldTitle").attr("type","text")
                     $(field).append(input)
                     let increase_btn=document.createElement("button")
                     $(increase_btn).addClass("m-2 p-1 border-2 text-slate-300 hover:text-white border-slate-300 rounded hover:bg-slate-600 px-2")
