@@ -7,35 +7,7 @@
                 <label class="p-3 text-white text-right w-full" asp-for="CategoryTitle" for=""></label>
                 <input  asp-for="CategoryTitle" class="p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" type="text">
             </div>
-            <div id="categories" class="p-4">
-                @foreach (var level in Model.Categories.Select(c => c.Level).Distinct().Order())
-                {
-                    <div class="ul" level="@level">
-                        @foreach (var category in Model.Categories.Where(c => c.Level == level))
-                        {
-                            @if (Model.Categories.Any(c=>Convert.ToInt32(c.PrentCategoryId)==category.Id))
-                            {
-                                <details class="m-2" id="@category.Id" parent-id="@category.PrentCategoryId">
-                                    <summary class="text-white">
-                                        <input type="checkbox" name="SelectedCategories" value="@category.Id" id="@category.Title">
-                                        <label class="text-white" for="@category.Title">@category.Title</label>
-                                    </summary>
-                                </details>
-                            }
-                            else
-                            {
-                                <details class="m-2" id="@category.Id" parent-id="@category.PrentCategoryId">
-                                    <summary class="list-none text-white">
-                                        <input  type="checkbox" name="SelectedCategories" value="@category.Id" id="@category.Title">
-                                        <label class="text-white" for="@category.Title">@category.Title</label>
-                                    </summary>
-                                </details>
-                            }
-                        }
-                    </div>
-                    
-                }
-            </div>
+            <partial name="Categories" for="Categories"/>
             <div id="fields">
                 <div class="field-item flex justify-between p-2 items-center">
                     <h1 id="fieldTitleSec" class="text-white">فیلد های مخصوص این دسته بندی</h1>

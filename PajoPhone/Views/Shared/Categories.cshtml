@@ -1,0 +1,31 @@
+@model List<Category>
+<div id="categories" class="p-4">
+                @foreach (var level in Model.Select(c => c.Level).Distinct().Order())
+                {
+                    <div class="ul" level="@level">
+                        @foreach (var category in Model.Where(c => c.Level == level))
+                        {
+                            @if (Model.Any(c=>Convert.ToInt32(c.PrentCategoryId)==category.Id))
+                            {
+                                <details class="m-2" id="@category.Id" parent-id="@category.PrentCategoryId">
+                                    <summary class="text-white">
+                                        <input type="checkbox" name="SelectedCategories" value="@category.Id" id="@category.Title">
+                                        <label class="text-white" for="@category.Title">@category.Title</label>
+                                    </summary>
+                                </details>
+                            }
+                            else
+                            {
+                                <details class="m-2" id="@category.Id" parent-id="@category.PrentCategoryId">
+                                    <summary class="list-none text-white">
+                                        <input  type="checkbox" name="SelectedCategories" value="@category.Id" id="@category.Title">
+                                        <label class="text-white" for="@category.Title">@category.Title</label>
+                                    </summary>
+                                </details>
+                            }
+                        }
+                    </div>
+                    
+                }
+            </div>
+
