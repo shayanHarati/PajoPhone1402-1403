@@ -11,6 +11,8 @@ public class CreateOrEditCtegoryViewModel
         SelectedCategories = new List<int>();
         Fields = new CreateFieldViewModel();
     }
+
+    public int CategoryId { get; set; }
     [Display(Name = "عنوان دسته")]
     [Required(ErrorMessage = "{0} این فیلد ضروری است")]
     public string CategoryTitle { get; set; }

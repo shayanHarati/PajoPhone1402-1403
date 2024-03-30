@@ -1,16 +1,24 @@
 using Microsoft.AspNetCore.Mvc;
 using PajoPhone.DataLayer.Interfaces;
 using PajoPhone.ViewModels;
+using Category = PajoPhone.DataLayer.Models.Category;
+using Field = PajoPhone.DataLayer.Models.Field;
 
 namespace PajoPhone.Controllers;
 
 public class CategoryController : Controller
 {
     private ICategory _category;
-
-    public CategoryController(ICategory category)
+    private IField _field;
+    public CategoryController(ICategory category,IField field)
     {
         _category = category;
+        _field = field;
+    }
+
+    private IActionResult showCreateCategoryForm()
+    {
+        return RedirectToAction("CreateOrEditCategory");
     }
     [HttpGet]
     public IActionResult CreateOrEditCategory()
@@ -27,7 +35,43 @@ public class CategoryController : Controller
     [HttpPost]
     public IActionResult CreateOrEditCategory(CreateOrEditCtegoryViewModel model)
     {
-        return View();
+        if (!ModelState.IsValid)
+        {
+            return showCreateCategoryForm();
+        }
+        var category = _category.GetCategory(model.CategoryId);
+        // Category should be created
+        if (category == null)
+        {
+            foreach (var sub in model.SelectedCategories)
+            {
+                var parentLevel = _category.GetLevel(sub);
+                category = new Category()
+                {
+                    Level = parentLevel + 1,
+                    Title = model.CategoryTitle,
+                    PrentCategoryId = sub.ToString()
+                };
+                var catId= _category.CreateCategory(category);
+                foreach (var fieldObj in model.Fields.Fields)
+                {
+                    var field = new Field()
+                    {
+                        FieldTitle = fieldObj.FieldTitle,
+                        CategoryId = catId,
+                        Type = fieldObj.Type
+                    };
+                    _field.CreateField(field);
+                }
+            }
+           
+            return Redirect($"/Store/Index/");
+        }
+        else
+        {
+            // Category should be Updated
+            return Redirect($"/Store/Index/");
+        }
     }
 
     

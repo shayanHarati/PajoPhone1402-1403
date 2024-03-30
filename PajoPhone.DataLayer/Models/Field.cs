@@ -16,7 +16,7 @@ public class Field
 
     #region Relations
     public int CategoryId { get; set; }
-    public virtual Category Category { get; set; }
-    public virtual List<FieldProduct> Products { get; set; }
+    public virtual Category? Category { get; set; }
+    public virtual List<FieldProduct>? Products { get; set; }
     #endregion
 }

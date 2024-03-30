@@ -5,6 +5,8 @@ namespace PajoPhone.DataLayer.Interfaces;
 public interface ICategory
 {
     IEnumerable<Models.Category> GetAllCategories();
-    void CreateCategory(Models.Category category);
+    Models.Category GetCategory(int id);
+    int GetLevel(int id);
+    int CreateCategory(Models.Category category);
     void UpdateCategory(Models.Category newCategory);
 }
