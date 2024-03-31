@@ -18,7 +18,9 @@ public class StoreController : Controller
 
     public IActionResult ShowStore(StoreViewModel model)
     {
-        model.Filter.MaxPrice = _product.GetAllProducts().Select(c => c.ProductPrice).Max();
+        model.Filter.ProductPriceMax = _product.GetAllProducts().Select(c => c.ProductPrice).Max();
+        model.Filter.ProductPriceMin = _product.GetAllProducts().Select(c => c.ProductPrice).Min();
+        
         return View("Index",model);
     }
     public IActionResult ShowStore()
@@ -29,12 +31,26 @@ public class StoreController : Controller
         };
         FilterViewModel filterModel = new FilterViewModel()
         {
-            MaxPrice = _product.GetAllProducts().Select(c => c.ProductPrice).Max()
+            ProductPriceMax = _product.GetAllProducts().Select(c => c.ProductPrice).Max(),
+            ProductPriceMin =  _product.GetAllProducts().Select(c => c.ProductPrice).Min()
         };
         model.Filter = filterModel;
         return View("Index",model);
     }
-    
+
+    private IActionResult showCreateOrEdit(CreateOrEditProductViewModel model)
+    {
+        CreateOrEditProductViewModel vm = new CreateOrEditProductViewModel()
+        {
+            ProductName = model.ProductName,
+            ProductPrice = model.ProductPrice,
+            ImageProduct = model.ImageProduct,
+            ProductColor = model.ProductColor,
+            ProductDescription = model.ProductDescription,
+            Image = model.Image
+        };
+        return View("CreateOrEditProduct",vm);
+    }
     
     [HttpGet]
     public IActionResult Index()
@@ -47,112 +63,122 @@ public class StoreController : Controller
     }
     
     [HttpGet]
-    public IActionResult CreateOrEditProduct(int id)
+    public IActionResult CreateOrEditProduct(int pid)
     {
         // if product was not in database => we should create it
-        if (_product.GetById(id) == null)
+        if (_product.GetById(pid) == null)
         {
             ViewBag.state = "افزودن محصول";
-            return View();
+            CreateOrEditProductViewModel model = new CreateOrEditProductViewModel();
+            return showCreateOrEdit(model);
         }
         else
         {
             // if product was  in database => we should update it
             CreateOrEditProductViewModel model = new CreateOrEditProductViewModel()
             {
-                Id = _product.GetById(id).Id,
-                ProductName = _product.GetById(id).ProductName,
-                ImageProduct = _product.GetById(id).ImageProduct,
-                ProductColor = _product.GetById(id).ProductColor,
-                ProductPrice = (_product.GetById(id).ProductPrice).ToString().Replace(",","")
+                Id = _product.GetById(pid).Id,
+                ProductName = _product.GetById(pid).ProductName,
+                ImageProduct = _product.GetById(pid).ImageProduct,
+                ProductColor = _product.GetById(pid).ProductColor,
+                ProductDescription = _product.GetById(pid).ProductDescription,
+                ProductPrice = (_product.GetById(pid).ProductPrice).ToString().Replace(",","")
             };
             ViewBag.state = "ویرایش محصول";
             return View(model);
         }
     }
 
-    private static void _createImage(IFormFile Image, int id)
+    private static string _createImage(IFormFile Image, int id)
     {
         string directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
         Directory.CreateDirectory(directoryPath);
-
-        string imagePath = Path.Combine(directoryPath,id+ Path.GetExtension(Image.FileName) );
+        string imageName = id + Path.GetExtension(Image.FileName);
+        string imagePath = Path.Combine(directoryPath,imageName );
         using (var outputStream = new FileStream(imagePath, FileMode.Create, FileAccess.Write))
         {
             Image.CopyTo(outputStream);
         }
-        
-       
+
+        return imageName;
+
+    }
+
+    private void _removeImage(string imageName)
+    {
+        string directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
+        string imagePath = Path.Combine(directoryPath,imageName );
+        System.IO.File.Delete(imagePath);
     }
     [HttpPost]
     public IActionResult CreateOrEditProduct(CreateOrEditProductViewModel model)
     {
-        model.Id = model.Id;
-        var product = _product.GetById(model.Id);
-        if (product== null)
+        if (!ModelState.IsValid)
         {
             ViewBag.state = "افزودن محصول";
+            return showCreateOrEdit(model);
         }
-        else
+
+        var product = _product.GetById(model.Id);
+        const string defaultImageName = "Default.jpg";
+        // we want create a product
+        if (product == null)
         {
-            ViewBag.state = "ویرایش محصول";
-        }
-        
-        if (ModelState.IsValid)
-        {
-            var productmodel = new Product()
+            product = new Product()
             {
-                Id = model.Id,
                 ProductName = model.ProductName,
-                ImageProduct = model.ImageProduct,
+                ProductPrice = Convert.ToDecimal(model.ProductPrice),
                 ProductColor = model.ProductColor,
-                ProductPrice = Convert.ToDecimal(model.ProductPrice.Replace(",",""))
+                ProductDescription = model.ProductDescription,
+                ImageProduct = defaultImageName
             };
-            var extension =Path.GetExtension(model.ImageProduct);
-            // if product was not in database => we want creat it
-            if (product == null )
+            if (!_product.ExistProduct(model.ProductName))
             {
-                _createImage(model.Image, model.Id);
-                model.ImageProduct = model.Id+ Path.GetExtension((string)model.Image.FileName);
-                _product.CreateProduct(productmodel);
-                
-                FilterViewModel filtermodel = new FilterViewModel()
-                {
-                    ProductName = productmodel.ProductName,
-                    ProductPriceMax = productmodel.ProductPrice,
-                    ProductPriceMin = productmodel.ProductPrice,
-                    MaxPrice = _product.GetAllProducts().Select(c => c.ProductPrice).Max()
-                    
-                };
-                return RedirectToAction("Filter", filtermodel);
+                var  id= _product.CreateProduct(product);
+                var imageName=_createImage(model.Image,id);
+                product.ImageProduct = imageName;
+                model.ImageProduct = imageName;
+                _product.UpdateProduct(product);
             }
             else
             {
-                if (productmodel.ImageProduct != "p1.jpg")
-                {
-                   
-                    var imagepath = Path.Combine("wwwroot/images/", productmodel.Id.ToString()+extension );
-                    if (System.IO.File.Exists(imagepath))
-                    {
-                        System.IO.File.Delete(imagepath);
-                    }
-                }
-                _createImage(model.Image,productmodel.Id);
-                // if product was  in database => we want update it
-                product.ImageProduct = productmodel.Id.ToString()+extension;
-                product.ProductColor = productmodel.ProductColor;
-                product.ProductDescription = productmodel.ProductDescription;
-                product.ProductName =productmodel.ProductName;
-                product.ProductPrice = productmodel.ProductPrice;
-                _product.UpdateProduct(product);
+                ViewBag.state = "افزودن محصول";
+                ModelState.AddModelError("ProductName","محصولی با این نام قبلا ایجاد شده است");
+                return showCreateOrEdit(model);
             }
 
+            FilterViewModel vm = new FilterViewModel();
+            vm.ProductName = model.ProductName;
+            vm.ProductPriceMax = _product.GetAllProducts().Select(c => c.ProductPrice).Max();
+            vm.ProductPriceMin =  _product.GetAllProducts().Select(c => c.ProductPrice).Min();
+            return RedirectToAction("Filter",vm);
+        }
+        else
+        {
+            var imageName = defaultImageName;
+            // we want update product
+            if (!(model.ImageProduct == defaultImageName))
+            {
+                _removeImage(model.ImageProduct);
+                imageName= _createImage(model.Image, model.Id);
+            }
+            else if(!(model.Image.FileName == defaultImageName))
+            {
+                imageName= _createImage(model.Image, model.Id);
+            }
+
+            product.Id = model.Id;
+            product.ProductName = model.ProductName;
+            product.ProductPrice = Convert.ToDecimal(model.ProductPrice);
+            product.ProductColor = model.ProductColor;
+            product.ProductDescription = model.ProductDescription;
+            product.ImageProduct = imageName;
+            _product.UpdateProduct(product);
             return ShowStore();
         }
-        // if modelstate was not valid
         
-        return View(model);
     }
+    
     [HttpGet]
     public IActionResult EditProductPrice(int id)
     {
@@ -171,16 +197,17 @@ public class StoreController : Controller
     
     
     [HttpGet]
-    public IActionResult Filter( StoreViewModel model )
+    public IActionResult Filter( FilterViewModel model )
     {
-        var products = _product.FilterProducts(model.Filter.ProductName,
-            model.Filter.ProductPriceMax, model.Filter.ProductPriceMin);
+        var products = _product.FilterProducts(model.ProductName,
+            model.ProductPriceMax, model.ProductPriceMin);
         StoreViewModel createdModel = new StoreViewModel()
         {
             Products = products,
-            Filter = model.Filter,
+            Filter = model,
             
         };
-        return ShowStore(createdModel);
+        // return ShowStore(createdModel);
+        return Json(createdModel);
     }
 }

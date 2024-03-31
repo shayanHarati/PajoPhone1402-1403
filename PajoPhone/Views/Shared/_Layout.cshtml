@@ -44,22 +44,6 @@
 
 <script src="/js/typed.umd.js"></script>
 <script src="/js/typeSetting.js"></script>
-<script>
-             $(document).ready(function () {
-                 $("#filter").click(function () {
-                     $.ajax({
-                         type: "POST",
-                         url: "Store/Filter/",
-                         success: function (data) {
-                             $("#Store").html(data);
-                         },
-                         error: function () {
-                             $("#result").html("An error occurred while processing your request.");
-                         }
-                     });
-                 });
-             });
-         </script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

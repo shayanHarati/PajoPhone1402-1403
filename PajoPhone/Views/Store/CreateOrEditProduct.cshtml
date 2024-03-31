@@ -5,32 +5,18 @@
         <form enctype="multipart/form-data" asp-action="CreateOrEditProduct" asp-controller="Store" method="post" class="flex border-2 border-slate-600 lg:m-3 border-dotted flex-col xl:flex-row lg:justify-between">
             <div>
                 <div class="flex flex-col">
-                                <label class="m-2 text-white" asp-for="ImageProduct" for="Image"></label>
-                                @if (@Model != null)
+                                <label class="m-2 text-white" asp-for="Image"></label>
+                                @if (Model.ImageProduct == null)
                                 {
-                                    if (Model.ImageProduct != null)
-                                    {
-                                        <div>
-                                            <img class="border-2 border-slate-300 p-1 rounded mx-auto" width="250px" src="/images/@Model.ImageProduct" alt="">
-                                            <input  asp-for="ImageProduct" id="Image" value="@Model.ImageProduct"  type="hidden">
-                                            <input name="Image"  class="p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" asp-rout-model="@Model.ImageProduct" id="Image" type="file" value="@Model.ImageProduct">
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div>
-                                            <img src="/images/p1.jpg" alt="">
-                                            <input value="Default.png" asp-for="ImageProduct" type="hidden">
-                                            <input name="Image"   class="p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" asp-for="ImageProduct" id="Image" type="file" value="Deault.png">
-                                        </div>
-                                    }
+                                    <input  class=" p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" type="file" asp-for="Image"/>
                                 }
                                 else
                                 {
-                                    <input value="p1.jpg" asp-for="ImageProduct" type="hidden">
-                                    <input name="Image"   class="p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" asp-for="Image" id="Image" type="file">
+                                    <img src="@("/images/" + Model.ImageProduct)" />
+                                    <input class=" p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300"  asp-for="Image"/>
+                                    <input asp-for="ImageProduct" type="hidden"/>
                                 }
-                                <span class="error" asp-validation-for="ImageProduct" ></span>
+                                <span class="error" asp-validation-for="Image" ></span>
                          </div>
                 <div class="flex flex-col">
                             <div class="flex flex-col">
