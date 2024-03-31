@@ -9,7 +9,7 @@
                                 @if (Model.ImageProduct == null)
                                 {
                                     <input  class=" p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" type="file" asp-for="Image"/>
-                                    
+                                    <input asp-for="ImageProduct" value="Default.jpg" type="hidden"/>
                                 }
                                 else
                                 {
@@ -58,3 +58,35 @@
         </form>
     </div>
 </div>
+@section Scripts
+{
+    <script>
+        const Price = document.getElementById("Price")
+        let counter = 0
+        Price.addEventListener("keydown",(e)=>{
+            if (e.key === " "){
+                debugger;
+                console.log("space")
+                e.preventDefault()
+            }else{
+                if (e.key === "Backspace" && counter>=0){
+                    console.log(Price.value.slice(Price.value.length-1))
+                    // debugger;
+                     if (Price.value.slice(Price.value.length-1)=== ','){
+                        counter = 3;
+                     }else if (counter>=1){
+                        counter -= 1;
+                     }
+                }else{
+                    counter++ ; 
+                    if (counter % 4 === 0){
+                        Price.value += ",";
+                        counter = 1;
+                    }
+                 }
+               
+            }
+             document.getElementById("test").innerHTML = counter
+            })
+    </script>
+}

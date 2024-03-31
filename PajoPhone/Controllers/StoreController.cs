@@ -194,10 +194,8 @@ public class StoreController : Controller
         _product.UpdateProduct(selectedProduct);
         return ShowStore();
     }
-    
-    
-    [HttpGet]
-    public IActionResult Filter( FilterViewModel model )
+
+    private StoreViewModel Search(FilterViewModel model)
     {
         var products = _product.FilterProducts(model.ProductName,
             model.ProductPriceMax, model.ProductPriceMin);
@@ -207,7 +205,17 @@ public class StoreController : Controller
             Filter = model,
             
         };
-        // return ShowStore(createdModel);
-        return Json(createdModel);
+        return createdModel;
+    }
+    [HttpGet]
+    public IActionResult AJaxFilter(FilterViewModel model)
+    {
+        return Json(Search(model));
+
+    }
+    [HttpGet]
+    public IActionResult Filter( FilterViewModel model )
+    {
+        return ShowStore(Search(model));
     }
 }
