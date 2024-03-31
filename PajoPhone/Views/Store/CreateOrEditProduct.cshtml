@@ -9,6 +9,7 @@
                                 @if (Model.ImageProduct == null)
                                 {
                                     <input  class=" p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" type="file" asp-for="Image"/>
+                                    <input asp-for="ImageProduct" value="Default.jpg" type="hidden"/>
                                 }
                                 else
                                 {

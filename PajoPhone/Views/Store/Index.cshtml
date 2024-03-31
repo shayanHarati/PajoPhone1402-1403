@@ -90,7 +90,7 @@
                      var Max=$("#max_amount").val()
                      $.ajax({
                          method: "GET",
-                         url: "/Store/Filter?ProductName="+productName+"&ProductPriceMin="+Min+"&ProductPriceMax="+Max,
+                         url: "/Store/AJaxFilter?ProductName="+productName+"&ProductPriceMin="+Min+"&ProductPriceMax="+Max,
                          
                      }).done((e)=>{
                          var list = e["products"]
@@ -112,9 +112,9 @@
                           $(btnbox).addClass("flex")
                            
                            var editbtn = document.createElement("a")
-                           $(editbtn).addClass("bg-slate-950 mx-2 block text-center p-2 rounded text-white w-2/4  m-3").attr("href","/Store/CreateOrEditProduct?pid="+index).text("ویرایش محصول")
+                           $(editbtn).addClass("bg-slate-950 mx-2 block text-center p-2 rounded text-white w-2/4  m-3").attr("href","/Store/CreateOrEditProduct?pid="+list[index].id).text("ویرایش محصول")
                           var editpricebtn = document.createElement("a")
-                           $(editpricebtn).addClass("bg-slate-950 mx-2 block text-center p-2 rounded text-white w-2/4  m-3").attr("href","/Store/EditProductPrice/"+index).text("ویرایش قیمت")
+                           $(editpricebtn).addClass("bg-slate-950 mx-2 block text-center p-2 rounded text-white w-2/4  m-3").attr("href","/Store/EditProductPrice/"+list[index].id).text("ویرایش قیمت")
                           $(btnbox).append(editbtn)
                           $(btnbox).append(editpricebtn)
                           $(div).append(imgbox)
