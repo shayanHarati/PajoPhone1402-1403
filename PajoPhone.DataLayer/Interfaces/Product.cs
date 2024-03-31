@@ -30,10 +30,11 @@ public class Product:IProduct
         return _context.Products.SingleOrDefault(c=>c.Id == id);
     }
 
-    public void CreateProduct(Datalayer.Models.Product product)
+    public int CreateProduct(Datalayer.Models.Product product)
     {
         _context.Products.Add(product);
         _context.SaveChanges();
+        return _context.Products.Single(c => c.ProductName == product.ProductName).Id;
     }
 
     public void UpdateProduct(Datalayer.Models.Product newProduct)
@@ -41,5 +42,10 @@ public class Product:IProduct
         _context.Products.Update(newProduct);
         _context.SaveChanges();
 
+    }
+
+    public bool ExistProduct(string productName)
+    {
+        return _context.Products.Any(c => c.ProductName == productName);
     }
 }

@@ -5,8 +5,14 @@ namespace PajoPhone.ViewModels;
 
 public class StoreViewModel
 {
-    public required IEnumerable<Product> Products { get; set; }
+    public StoreViewModel()
+    {
+        Filter = new FilterViewModel();
+    }
+    public  IEnumerable<Product>? Products { get; set; }
 
     public FilterViewModel?  Filter { get; set; }
+    
+    
     
 }
