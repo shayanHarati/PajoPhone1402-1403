@@ -1,4 +1,4 @@
-@model List<Category>
+@model List<PajoPhone.DataLayer.Models.Category>
 <div id="categories" class="p-4">
                 @foreach (var level in Model.Select(c => c.Level).Distinct().Order())
                 {
