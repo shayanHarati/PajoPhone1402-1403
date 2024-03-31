@@ -48,4 +48,9 @@ public class Product:IProduct
     {
         return _context.Products.Any(c => c.ProductName == productName);
     }
+
+    public int GetIdByName(string productName)
+    {
+        return _context.Products.SingleOrDefault(c => c.ProductName == productName).Id;
+    }
 }

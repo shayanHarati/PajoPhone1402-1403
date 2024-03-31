@@ -9,4 +9,5 @@ public interface IProduct
     int CreateProduct(Datalayer.Models.Product product);
     void UpdateProduct(Datalayer.Models.Product newProduct);
     bool ExistProduct(string productName);
+    int GetIdByName(string productName);
 }
