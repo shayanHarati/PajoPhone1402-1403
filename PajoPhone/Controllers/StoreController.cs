@@ -142,7 +142,8 @@ public class StoreController : Controller
                 ProductPrice = Convert.ToDecimal(model.ProductPrice),
                 ProductColor = model.ProductColor,
                 ProductDescription = model.ProductDescription,
-                ImageProduct = defaultImageName
+                ImageProduct = defaultImageName,
+                CategoryId = 1
             };
             var  id= _product.CreateProduct(product);
             var imageName=_createImage(model.Image,id);

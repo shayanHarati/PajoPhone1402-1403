@@ -43,6 +43,25 @@ public class CategoryController : Controller
         // Category should be created
         if (category == null)
         {
+            if (model.SelectedCategories.Count ==0)
+            {
+                category = new Category()
+                {
+                    Level = 0,
+                    Title = model.CategoryTitle,
+                };
+                var catId= _category.CreateCategory(category);
+                foreach (var fieldObj in model.Fields.Fields)
+                {
+                    var field = new Field()
+                    {
+                        FieldTitle = fieldObj.FieldTitle,
+                        CategoryId = catId,
+                        Type = fieldObj.Type
+                    };
+                    _field.CreateField(field);
+                }
+            }
             foreach (var sub in model.SelectedCategories)
             {
                 var parentLevel = _category.GetLevel(sub);
