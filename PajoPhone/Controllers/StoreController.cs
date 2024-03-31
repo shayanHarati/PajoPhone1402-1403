@@ -113,13 +113,25 @@ public class StoreController : Controller
     [HttpPost]
     public IActionResult CreateOrEditProduct(CreateOrEditProductViewModel model)
     {
-        if (!ModelState.IsValid)
+        var product = _product.GetById(model.Id);
+        if (product == null)
         {
             ViewBag.state = "افزودن محصول";
+        }
+        else
+        {
+            ViewBag.state = "ویرایش محصول";
+        }
+        if (!ModelState.IsValid)
+        {
             return showCreateOrEdit(model);
         }
-
-        var product = _product.GetById(model.Id);
+        if (_product.ExistProduct(model.ProductName) && _product.GetIdByName(model.ProductName)!= model.Id)
+        {
+            ModelState.AddModelError("ProductName","محصولی با این نام قبلا ایجاد شده است");
+            return showCreateOrEdit(model);
+        }
+        
         const string defaultImageName = "Default.jpg";
         // we want create a product
         if (product == null)
@@ -132,20 +144,12 @@ public class StoreController : Controller
                 ProductDescription = model.ProductDescription,
                 ImageProduct = defaultImageName
             };
-            if (!_product.ExistProduct(model.ProductName))
-            {
-                var  id= _product.CreateProduct(product);
-                var imageName=_createImage(model.Image,id);
-                product.ImageProduct = imageName;
-                model.ImageProduct = imageName;
-                _product.UpdateProduct(product);
-            }
-            else
-            {
-                ViewBag.state = "افزودن محصول";
-                ModelState.AddModelError("ProductName","محصولی با این نام قبلا ایجاد شده است");
-                return showCreateOrEdit(model);
-            }
+            var  id= _product.CreateProduct(product);
+            var imageName=_createImage(model.Image,id);
+            product.ImageProduct = imageName;
+            model.ImageProduct = imageName;
+            _product.UpdateProduct(product);
+            
 
             FilterViewModel vm = new FilterViewModel();
             vm.ProductName = model.ProductName;
@@ -155,6 +159,8 @@ public class StoreController : Controller
         }
         else
         {
+            
+            ViewBag.state = "ویرایش محصول";
             var imageName = defaultImageName;
             // we want update product
             if (!(model.ImageProduct == defaultImageName))
