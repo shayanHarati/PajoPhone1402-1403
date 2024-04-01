@@ -7,7 +7,9 @@
                 <label class="p-3 text-white text-right w-full" asp-for="CategoryTitle" for=""></label>
                 <input  asp-for="CategoryTitle" class="p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" type="text">
             </div>
-            <partial name="Categories" for="Categories"/>
+            <div class="text-white">
+                <partial  name="CategoriesCheckbox" for="Categories"/>
+            </div>
             <div id="fields">
                 <div class="field-item flex justify-between p-2 items-center">
                     <h1 id="fieldTitleSec" class="text-white">فیلد های مخصوص این دسته بندی</h1>

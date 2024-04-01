@@ -10,29 +10,32 @@ namespace PajoPhone.Controllers;
 public class StoreController : Controller
 {
     private readonly IProduct _product;
-
-    public StoreController(IProduct product)
+    private readonly ICategory _category;
+    public StoreController(IProduct product,ICategory category)
     {
         _product = product;
+        _category = category;
     }
 
     public IActionResult ShowStore(StoreViewModel model)
     {
         model.Filter.ProductPriceMax = _product.GetAllProducts().Select(c => c.ProductPrice).Max();
         model.Filter.ProductPriceMin = _product.GetAllProducts().Select(c => c.ProductPrice).Min();
-        
+        model.Filter.Categories = _category.GetAllCategories().ToList();
         return View("Index",model);
     }
     public IActionResult ShowStore()
     {
         StoreViewModel model = new StoreViewModel()
         {
-            Products = _product.GetAllProducts()
+            Products = _product.GetAllProducts(),
         };
+       
         FilterViewModel filterModel = new FilterViewModel()
         {
             ProductPriceMax = _product.GetAllProducts().Select(c => c.ProductPrice).Max(),
-            ProductPriceMin =  _product.GetAllProducts().Select(c => c.ProductPrice).Min()
+            ProductPriceMin =  _product.GetAllProducts().Select(c => c.ProductPrice).Min(),
+            Categories = _category.GetAllCategories().ToList()
         };
         model.Filter = filterModel;
         return View("Index",model);

@@ -59,35 +59,4 @@
         </form>
     </div>
 </div>
-@section Scripts
-{
-    <script>
-        const Price = document.getElementById("Price")
-        let counter = 0
-        Price.addEventListener("keydown",(e)=>{
-            if (e.key === " "){
-                debugger;
-                console.log("space")
-                e.preventDefault()
-            }else{
-                if (e.key === "Backspace" && counter>=0){
-                    console.log(Price.value.slice(Price.value.length-1))
-                    // debugger;
-                     if (Price.value.slice(Price.value.length-1)=== ','){
-                        counter = 3;
-                     }else if (counter>=1){
-                        counter -= 1;
-                     }
-                }else{
-                    counter++ ; 
-                    if (counter % 4 === 0){
-                        Price.value += ",";
-                        counter = 1;
-                    }
-                 }
-               
-            }
-             document.getElementById("test").innerHTML = counter
-            })
-    </script>
-}
+

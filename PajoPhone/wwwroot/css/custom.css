@@ -1,0 +1,35 @@
+.header:after{
+    background: url("../images/bg.jpg");
+    position: absolute;
+    content: "";
+    left:0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+}
+.line-after{
+    position: relative;
+    padding: 25px;
+    border-bottom: 5px solid rgb(2 6 23 /1);
+    margin-bottom: 1.5rem;
+}
+.line-after:after{
+    content: "";
+    position: absolute !important;
+    background: rgb(2 6 23 /1);
+    border:5px solid rgb(2 6 23 /1);
+    width:20px;
+    height: 20px;
+    right:0;
+    bottom: -13px;
+}
+.line-after:before{
+    content: "";
+    position: absolute !important;
+    background: rgb(2 6 23 /1);
+    border:5px solid rgb(2 6 23 /1);
+    width:20px;
+    height: 20px;
+    left:0;
+    bottom: -13px;
+}

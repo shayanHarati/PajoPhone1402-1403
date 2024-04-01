@@ -11,7 +11,7 @@
 
 <div class="grid grid-cols-1 md:grid-cols-5   p-2 ">
     <div class="filter p-3 md:col-span-2 lg:col-span-1">
-        <p class="border-b-2 border-gray-800 p-3">فیلتر ها</p>
+        <p class="line-after font-bold p-3">فیلتر ها</p>
         <form  method="get">
             <div class="flex flex-col  p-3">
                 <label name="ProductName" asp-for="Filter.ProductName"></label>
@@ -28,6 +28,30 @@
                     <div id="slider-range" class="mt-2"></div>
                 </div>
             }
+            <div>
+                <div>
+                    <p class="font-bold line-after">فیلتر براساس دسته بندی ها</p>
+                </div>
+                <div>
+                    <div class="flex pr-4">
+                        <input id="allcategories" checked type="checkbox" value="all" asp-for="Filter.AllCategories">
+                        <label for="allcategories">همه دسته بندی ها</label>
+                    </div>
+                    <partial  name="CategoriesCheckbox" for="Filter.Categories"/>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <p class="font-bold line-after">فیلتر براساس فیلد ها</p>
+                </div>
+                <div>
+                    <div class="flex pr-4">
+                        <input id="allfields" checked type="checkbox" value="all" asp-for="Filter.AllCategories">
+                        <label for="allfields">همه فیلد ها</label>
+                    </div>
+                    
+                </div>
+            </div>
             
             <div class="p-3">
                 <button  type="button"  id="filter" class="bg-slate-950 block text-center p-2 rounded text-white" >جستجو</button>
@@ -35,10 +59,10 @@
         </form>
     </div>
     
-    <div id="Store" class="products grid md:col-span-3  lg:col-span-4 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    <div id="Store" class="products h-fit grid md:col-span-3 lg:col-span-4 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         @foreach (var item in Model.Products)
         {
-            <div class="border-2 border-gray-800" data-id="@item.Id">
+            <div class="border-2 border-gray-800 h-fit" data-id="@item.Id">
                 <div class="border-b-2 border-gray-800 p-2">
                     <img class="rounded" src="/images/@item.ImageProduct" alt="">
                 </div>
@@ -79,7 +103,7 @@
             $( "#max_amount" ).val($( "#slider-range" ).slider( "values", 1 ));  
             })
     </script>
-
+<script src="/js/AutomaticLists.js"></script>
         <script>
             
              $(document).ready(function () {
@@ -96,7 +120,7 @@
                          var list = e["products"]
                          for (var index in list){
                           var div = document.createElement("div")
-                          $(div).addClass("border-2 border-gray-800")
+                          $(div).addClass("border-2 h-fit border-gray-800")
                           $(div).attr("data-id",list[index].id)
                           var imgbox = document.createElement("div");
                           $(imgbox).addClass("border-b-2 border-gray-800 p-2")
