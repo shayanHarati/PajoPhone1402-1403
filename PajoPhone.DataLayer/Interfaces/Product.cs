@@ -17,9 +17,9 @@ public class Product:IProduct
     {
         var selectedProduct= _context.Products.Where(c => c.ProductName.Contains(name));
         var selectdProduct2 = _context.Products.Where(c => c.ProductPrice <= maxPrice && c.ProductPrice >= minPrice);
-        if (selectdProduct2 == null || selectedProduct == null)
+        if (selectdProduct2.Count()==0 || selectedProduct.Count()==0)
         {
-            return selectedProduct.Union(selectdProduct2);
+            return selectdProduct2.Union(selectedProduct);
         }
 
         return selectedProduct.Intersect(selectdProduct2);
