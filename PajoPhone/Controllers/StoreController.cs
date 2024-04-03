@@ -11,10 +11,12 @@ public class StoreController : Controller
 {
     private readonly IProduct _product;
     private readonly ICategory _category;
-    public StoreController(IProduct product,ICategory category)
+    private readonly IField _field;
+    public StoreController(IProduct product,ICategory category,IField field)
     {
         _product = product;
         _category = category;
+        _field = field;
     }
 
     public IActionResult ShowStore(StoreViewModel model)
@@ -22,6 +24,7 @@ public class StoreController : Controller
         model.Filter.ProductPriceMax = _product.GetAllProducts().Select(c => c.ProductPrice).Max();
         model.Filter.ProductPriceMin = _product.GetAllProducts().Select(c => c.ProductPrice).Min();
         model.Filter.Categories = _category.GetAllCategories().ToList();
+        model.Filter.Fields = _field.GetAllField().ToList();
         return View("Index",model);
     }
     public IActionResult ShowStore()
@@ -35,7 +38,8 @@ public class StoreController : Controller
         {
             ProductPriceMax = _product.GetAllProducts().Select(c => c.ProductPrice).Max(),
             ProductPriceMin =  _product.GetAllProducts().Select(c => c.ProductPrice).Min(),
-            Categories = _category.GetAllCategories().ToList()
+            Categories = _category.GetAllCategories().ToList(),
+            Fields = _field.GetAllField().ToList()
         };
         model.Filter = filterModel;
         return View("Index",model);

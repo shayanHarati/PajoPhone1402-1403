@@ -46,8 +46,15 @@
                 </div>
                 <div>
                     <div class="flex pr-4">
-                        <input id="allfields" checked type="checkbox" value="all" asp-for="Filter.AllCategories">
-                        <label for="allfields">همه فیلد ها</label>
+                        @* <input id="allfields" checked type="checkbox" value="all" asp-for="Filter.AllCategories"> *@
+                        @* <label for="allfields">همه فیلد ها</label> *@
+                        <select multiple name="" id="fieldSelectorFilter" data-no_results_text="فیلد مورد نظر یافت نشد" data-placeholder="فیلد مورد نظر خود را انتخاب کنید ">
+                            <option selected value="all">همه فیلد ها</option>
+                            @foreach (var field in Model.Filter.Fields)
+                            {
+                                <option value="@field.FieldTitle">@field.FieldTitle</option>
+                            }
+                        </select>
                     </div>
                     
                 </div>
@@ -102,8 +109,8 @@
                    );
             $( "#max_amount" ).val($( "#slider-range" ).slider( "values", 1 ));  
             })
-    </script>
-<script src="/js/AutomaticLists.js"></script>
+        </script>
+        <script src="/js/AutomaticLists.js"></script>
         <script>
             
              $(document).ready(function () {
@@ -152,6 +159,12 @@
                  });
              });
          </script>
+        <script >
+            $("#fieldSelectorFilter").chosen({
+                width:"100%"
+            });
+        </script>
     }
 
 }
+

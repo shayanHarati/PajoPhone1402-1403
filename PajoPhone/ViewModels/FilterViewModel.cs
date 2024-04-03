@@ -7,7 +7,7 @@ public class FilterViewModel
 {
     public FilterViewModel()
     {
-        Fields = new List<string>();
+        Fields = new List<Field>();
         Categories = new List<Category>();
         SelectedCategories = new List<string>();
         SelectedFields = new List<string>();
@@ -22,7 +22,7 @@ public class FilterViewModel
     public  List<Category> Categories { get; set; }
     public List<string>? SelectedCategories { get; set; }
     
-    public  List<string> Fields { get; set; }
+    public  List<Field> Fields { get; set; }
     public List<string>? SelectedFields { get; set; }
     
 }
