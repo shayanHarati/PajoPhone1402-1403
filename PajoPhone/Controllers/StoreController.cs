@@ -23,7 +23,7 @@ public class StoreController : Controller
     {
         model.Filter.ProductPriceMax = _product.GetAllProducts().Select(c => c.ProductPrice).Max();
         model.Filter.ProductPriceMin = _product.GetAllProducts().Select(c => c.ProductPrice).Min();
-        model.Filter.Categories = _category.GetAllCategories().ToList();
+        model.Filter.CategoriesList.Categories = _category.GetAllCategories().ToList();
         model.Filter.Fields = _field.GetAllField().ToList();
         return View("Index",model);
     }
@@ -31,16 +31,16 @@ public class StoreController : Controller
     {
         StoreViewModel model = new StoreViewModel()
         {
-            Products = _product.GetAllProducts(),
+            Products = _product.GetAllProducts()
         };
-       
+        
         FilterViewModel filterModel = new FilterViewModel()
         {
             ProductPriceMax = _product.GetAllProducts().Select(c => c.ProductPrice).Max(),
             ProductPriceMin =  _product.GetAllProducts().Select(c => c.ProductPrice).Min(),
-            Categories = _category.GetAllCategories().ToList(),
             Fields = _field.GetAllField().ToList()
         };
+        filterModel.CategoriesList.Categories = _category.GetAllCategories().ToList();
         model.Filter = filterModel;
         return View("Index",model);
     }

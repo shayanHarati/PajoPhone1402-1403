@@ -23,11 +23,9 @@ public class CategoryController : Controller
     [HttpGet]
     public IActionResult CreateOrEditCategory()
     {
-        CreateOrEditCtegoryViewModel model = new CreateOrEditCtegoryViewModel()
-        {
-            Categories = _category.GetAllCategories().ToList()
-
-        };
+        CreateOrEditCtegoryViewModel model = new CreateOrEditCtegoryViewModel();
+        model.CategoriesList.Categories = _category.GetAllCategories().ToList();
+        
         
         return View(model);
     }

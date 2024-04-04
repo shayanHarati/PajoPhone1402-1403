@@ -13,8 +13,7 @@ public class StoreViewModel
     public  IEnumerable<Product>? Products { get; set; }
 
     public FilterViewModel?  Filter { get; set; }
-    
-    
+
     
     
 }

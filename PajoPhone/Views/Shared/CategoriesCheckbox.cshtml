@@ -1,15 +1,15 @@
-@model List<PajoPhone.DataLayer.Models.Category>
+@model CategoriesListViewModel
 <div id="categories" class="px-4 pb-4">
-                @foreach (var level in Model.Select(c => c.Level).Distinct().Order())
+                @foreach (var level in Model.Categories.Select(c => c.Level).Distinct().Order())
                 {
                     <div class="ul" level="@level">
-                        @foreach (var category in Model.Where(c => c.Level == level))
+                        @foreach (var category in Model.Categories.Where(c => c.Level == level))
                         {
-                            @if (Model.Any(c=>Convert.ToInt32(c.PrentCategoryId)==category.Id))
+                            @if (Model.Categories.Any(c=>Convert.ToInt32(c.PrentCategoryId)==category.Id))
                             {
                                 <details class="m-2" id="@category.Id" parent-id="@category.PrentCategoryId">
                                     <summary>
-                                        <input type="checkbox" name="SelectedCategories" value="@category.Id" id="@category.Title">
+                                        <input type="checkbox" asp-for="SelectedCategories" value="@category.Id" id="@category.Title">
                                         <label  for="@category.Title">@category.Title</label>
                                     </summary>
                                 </details>
@@ -18,7 +18,7 @@
                             {
                                 <details class="m-2" id="@category.Id" parent-id="@category.PrentCategoryId">
                                     <summary class="list-none" style="list-style: none">
-                                        <input  type="checkbox" name="SelectedCategories" value="@category.Id" id="@category.Title">
+                                        <input  type="checkbox" asp-for="SelectedCategories" value="@category.Id" id="@category.Title">
                                         <label  for="@category.Title">@category.Title</label>
                                     </summary>
                                 </details>
