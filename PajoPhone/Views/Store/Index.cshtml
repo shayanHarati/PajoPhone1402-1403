@@ -12,7 +12,7 @@
 <div class="grid grid-cols-1 md:grid-cols-5   p-2 ">
     <div class="filter p-3 md:col-span-2 lg:col-span-1">
         <p class="line-after font-bold p-3">فیلتر ها</p>
-        <form  method="get">
+        <form asp-action="Filter" asp-controller="Store" method="get">
             <div class="flex flex-col  p-3">
                 <label name="ProductName" asp-for="Filter.ProductName"></label>
                 <input class="mt-2 border border-gray-500 rounded p-1" type="text"  name="ProductName" asp-for="Filter.ProductName">
@@ -37,7 +37,7 @@
                     @*     <input id="allcategories" checked type="checkbox" value="all" asp-for="Filter.AllCategories"> *@
                     @*     <label for="allcategories">همه دسته بندی ها</label> *@
                     @* </div> *@
-                    <partial  name="CategoriesCheckbox" for="Filter.CategoriesList"/>
+                    <partial  name="CategoriesCheckbox" for="Filter.CategoryList"/>
                 </div>
             </div>
             <div>
@@ -61,7 +61,7 @@
             </div>
             
             <div class="p-3">
-                <button  type="button"  id="filter" class="bg-slate-950 block text-center p-2 rounded text-white" >جستجو</button>
+                <button  type="submit"  id="filter" class="bg-slate-950 block text-center p-2 rounded text-white" >جستجو</button>
             </div>
         </form>
     </div>

@@ -23,7 +23,7 @@ public class StoreController : Controller
     {
         model.Filter.ProductPriceMax = _product.GetAllProducts().Select(c => c.ProductPrice).Max();
         model.Filter.ProductPriceMin = _product.GetAllProducts().Select(c => c.ProductPrice).Min();
-        model.Filter.CategoriesList.Categories = _category.GetAllCategories().ToList();
+        model.Filter.CategoryList.Categories = _category.GetAllCategories().ToList();
         model.Filter.Fields = _field.GetAllField().ToList();
         return View("Index",model);
     }
@@ -40,7 +40,7 @@ public class StoreController : Controller
             ProductPriceMin =  _product.GetAllProducts().Select(c => c.ProductPrice).Min(),
             Fields = _field.GetAllField().ToList()
         };
-        filterModel.CategoriesList.Categories = _category.GetAllCategories().ToList();
+        filterModel.CategoryList.Categories = _category.GetAllCategories().ToList();
         model.Filter = filterModel;
         return View("Index",model);
     }
