@@ -56,7 +56,8 @@ public class StoreController : Controller
             ProductDescription = model.ProductDescription,
             Image = model.Image
         };
-        vm.CategoryList.Categories = model.CategoryList.Categories;
+        vm.CategoryList.Categories = _category.GetAllCategories().ToList();
+        vm.CategoryList.SelectedCategories = model.CategoryList.SelectedCategories;
         return View("CreateOrEditProduct",vm);
     }
     
@@ -93,6 +94,8 @@ public class StoreController : Controller
                 ProductDescription = _product.GetById(pid).ProductDescription,
                 ProductPrice = (_product.GetById(pid).ProductPrice).ToString().Replace(",","")
             };
+            model.CategoryList.SelectedCategories.Add(_product.GetById(pid).CategoryId);
+            model.CategoryList.Categories = _category.GetAllCategories().ToList();
             ViewBag.state = "ویرایش محصول";
             return View(model);
         }
@@ -189,6 +192,7 @@ public class StoreController : Controller
             product.ProductColor = model.ProductColor;
             product.ProductDescription = model.ProductDescription;
             product.ImageProduct = imageName;
+            product.CategoryId = model.CategoryList.SelectedCategories[0];
             _product.UpdateProduct(product);
             return ShowStore();
         }

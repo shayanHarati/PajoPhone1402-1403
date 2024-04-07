@@ -9,7 +9,14 @@
                             {
                                 <details class="m-2" id="@category.Id" parent-id="@category.PrentCategoryId">
                                     <summary>
-                                        <input type="checkbox" name="CategoryList.SelectedCategories" value=@category.Id.ToString() id="@category.Title">
+                                        @if (Model.SelectedCategories.Contains(category.Id))
+                                        {
+                                            <input checked type="checkbox" name="CategoryList.SelectedCategories" value=@category.Id.ToString() id="@category.Title">
+                                        }
+                                        else
+                                        {
+                                            <input  type="checkbox" name="CategoryList.SelectedCategories" value=@category.Id.ToString() id="@category.Title">
+                                        }
                                         <label  for="@category.Title">@category.Title</label>
                                     </summary>
                                 </details>
@@ -18,8 +25,16 @@
                             {
                                 <details class="m-2" id="@category.Id" parent-id="@category.PrentCategoryId">
                                     <summary class="list-none" style="list-style: none">
-                                        <input  type="checkbox" name="CategoryList.SelectedCategories" value=@category.Id.ToString() id="@category.Title">
-                                        <label  for="@category.Title">@category.Title</label>
+                                         @if (Model.SelectedCategories.Contains(category.Id))
+                                         {
+                                             <input checked type="checkbox" name="CategoryList.SelectedCategories" value=@category.Id.ToString() id="@category.Title">
+                                         }
+                                         else
+                                         {
+                                             <input  type="checkbox" name="CategoryList.SelectedCategories" value=@category.Id.ToString() id="@category.Title">
+                                         }
+                                        
+                                        <label for="@category.Title">@category.Title</label>
                                     </summary>
                                 </details>
                             }
