@@ -8,8 +8,7 @@ public class CreateOrEditCtegoryViewModel
     public CreateOrEditCtegoryViewModel()
     {
         Fields = new CreateFieldViewModel();
-        CategoriesList = new CategoriesListViewModel();
-        SelectedCategories = new List<int>();
+        CategoryList = new CategoriesListViewModel();
     }
 
     public int CategoryId { get; set; }
@@ -17,8 +16,7 @@ public class CreateOrEditCtegoryViewModel
     [Required(ErrorMessage = "{0} این فیلد ضروری است")]
     public string CategoryTitle { get; set; }
 
-    public CategoriesListViewModel CategoriesList { get; set; }
-    public List<int> SelectedCategories { get; set; }
+    public CategoriesListViewModel CategoryList { get; set; }
     
     [Required(ErrorMessage = "لطفا حداقل یک دسته بندی را انتخاب کنید")]
 

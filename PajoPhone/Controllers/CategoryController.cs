@@ -24,9 +24,7 @@ public class CategoryController : Controller
     public IActionResult CreateOrEditCategory()
     {
         CreateOrEditCtegoryViewModel model = new CreateOrEditCtegoryViewModel();
-        model.CategoriesList.Categories = _category.GetAllCategories().ToList();
-        
-        
+        model.CategoryList.Categories = _category.GetAllCategories().ToList();
         return View(model);
     }
     
@@ -41,7 +39,7 @@ public class CategoryController : Controller
         // Category should be created
         if (category == null)
         {
-            if (model.SelectedCategories.Count ==0)
+            if (model.CategoryList.SelectedCategories.Count ==0)
             {
                 category = new Category()
                 {
@@ -60,7 +58,7 @@ public class CategoryController : Controller
                     _field.CreateField(field);
                 }
             }
-            foreach (var sub in model.SelectedCategories)
+            foreach (var sub in model.CategoryList.SelectedCategories)
             {
                 
                 var parentLevel = _category.GetLevel(sub);
