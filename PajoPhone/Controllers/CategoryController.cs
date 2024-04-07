@@ -62,6 +62,7 @@ public class CategoryController : Controller
             }
             foreach (var sub in model.SelectedCategories)
             {
+                
                 var parentLevel = _category.GetLevel(sub);
                 category = new Category()
                 {

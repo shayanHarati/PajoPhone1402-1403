@@ -11,6 +11,6 @@ public class CategoriesListViewModel
     }
 
     public List<Category>? Categories { get; set; }
-    public List<int>? SelectedCategories { get; set; }
+    public List<int> SelectedCategories { get; set; }
     
 }
