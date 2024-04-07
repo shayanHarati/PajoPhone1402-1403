@@ -5,6 +5,10 @@ namespace PajoPhone.ViewModels;
 
 public class CreateOrEditProductViewModel
 {
+    public CreateOrEditProductViewModel()
+    {
+        CategoryList = new CategoriesListViewModel();
+    }
     public int Id { get; set; }
     
     [Display(Name = "نام محصول")]
@@ -34,4 +38,6 @@ public class CreateOrEditProductViewModel
     [Display(Name = "تصویر")]
     [Required(ErrorMessage =" {0} یک فیلد اجباری است" )]
     public  IFormFile Image { get; set; }
+
+    public CategoriesListViewModel CategoryList { set; get; }
 }

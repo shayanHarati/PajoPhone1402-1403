@@ -56,6 +56,7 @@ public class StoreController : Controller
             ProductDescription = model.ProductDescription,
             Image = model.Image
         };
+        vm.CategoryList.Categories = model.CategoryList.Categories;
         return View("CreateOrEditProduct",vm);
     }
     
@@ -77,6 +78,7 @@ public class StoreController : Controller
         {
             ViewBag.state = "افزودن محصول";
             CreateOrEditProductViewModel model = new CreateOrEditProductViewModel();
+            model.CategoryList.Categories = _category.GetAllCategories().ToList();
             return showCreateOrEdit(model);
         }
         else
@@ -150,7 +152,7 @@ public class StoreController : Controller
                 ProductColor = model.ProductColor,
                 ProductDescription = model.ProductDescription,
                 ImageProduct = defaultImageName,
-                CategoryId = 1
+                CategoryId = model.CategoryList.SelectedCategories[0]
             };
             var  id= _product.CreateProduct(product);
             var imageName=_createImage(model.Image,id);
