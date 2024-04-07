@@ -46,13 +46,18 @@
                 </div>
                 <div>
                     <div class="flex pr-4">
-                        @* <input id="allfields" checked type="checkbox" value="all" asp-for="Filter.AllCategories"> *@
-                        @* <label for="allfields">همه فیلد ها</label> *@
-                        <select multiple name="" id="fieldSelectorFilter" data-no_results_text="فیلد مورد نظر یافت نشد" data-placeholder="فیلد مورد نظر خود را انتخاب کنید ">
-                            <option selected value="all">همه فیلد ها</option>
+                        
+                        <select multiple name="SelectedFields" id="fieldSelectorFilter" data-no_results_text="فیلد مورد نظر یافت نشد" data-placeholder="فیلد مورد نظر خود را انتخاب کنید ">
                             @foreach (var field in Model.Filter.Fields)
                             {
-                                <option value="@field.FieldTitle">@field.FieldTitle</option>
+                                if (Model.Filter.SelectedFields.Contains(field.FieldTitle))
+                                {
+                                    <option selected asp-for="Filter.SelectedFields" value="@field.FieldTitle">@field.FieldTitle</option>
+                                }
+                                else
+                                {
+                                    <option asp-for="Filter.SelectedFields" value="@field.FieldTitle">@field.FieldTitle</option>
+                                }
                             }
                         </select>
                     </div>

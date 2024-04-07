@@ -13,16 +13,61 @@ public class Product:IProduct
         return _context.Products;
     }
 
-    public IEnumerable<Datalayer.Models.Product> FilterProducts(string name, decimal maxPrice, decimal minPrice)
+    private List<Datalayer.Models.Product> _filterCategories(List<int>categoriesId)
     {
-        var selectedProduct= _context.Products.Where(c => c.ProductName.Contains(name));
-        var selectdProduct2 = _context.Products.Where(c => c.ProductPrice <= maxPrice && c.ProductPrice >= minPrice);
-        if (selectdProduct2.Count()==0 || selectedProduct.Count()==0)
+        List<Datalayer.Models.Product> selectedProduct3 = new List<Datalayer.Models.Product>();
+        foreach (var category in categoriesId)
         {
-            return selectdProduct2.Union(selectedProduct);
+            var selectedList= _context.Products.Where(c => c.CategoryId == category).ToList();
+            foreach (var product in selectedList)
+            {
+                selectedProduct3.Add(product);
+            }
         }
 
-        return selectedProduct.Intersect(selectdProduct2);
+        return selectedProduct3;
+    }
+    public IEnumerable<Datalayer.Models.Product> FilterProducts(string name, decimal maxPrice, decimal minPrice,List<int>categoriesId,List<string> fields)
+    {
+        var selectedProduct= _context.Products.Where(c => c.ProductName.Contains(name)).ToList();
+        var selectedProduct2 = _context.Products.Where(c => c.ProductPrice <= maxPrice && c.ProductPrice >= minPrice).ToList();
+        var selectedProduct3 = _filterCategories(categoriesId).ToList();
+        List<Datalayer.Models.Product> selectedProduct4 = new List<Datalayer.Models.Product>();
+        List<int> categoriesIds = new List<int>();
+        foreach (var field in fields)
+        {
+            var selectedFields= _context.Fields.Where(c => c.FieldTitle == field).ToList();
+            foreach (var selectedField in selectedFields)
+            {
+                categoriesIds.Add(selectedField.CategoryId);
+            }
+            
+        }
+        selectedProduct4= _filterCategories(categoriesIds.Distinct().ToList()).ToList();
+        if (selectedProduct.Count()==0)
+        {
+            if ((selectedProduct3.Union(selectedProduct4)).Count()==0)
+            {
+                return selectedProduct2.ToList();
+            }
+            else
+            {
+                var result = selectedProduct2.Intersect(selectedProduct3.Union(selectedProduct4));
+                return result.ToList();
+            }
+        }
+        else
+        {
+            if ((selectedProduct3.Union(selectedProduct4)).Count()==0)
+            {
+                return selectedProduct.Intersect(selectedProduct2).ToList();
+            }
+            else
+            {
+                return (selectedProduct3.Union(selectedProduct4)).Intersect(selectedProduct)
+                    .Intersect(selectedProduct2).ToList();
+            }
+        }
     }
 
     public Datalayer.Models.Product GetById(int id)

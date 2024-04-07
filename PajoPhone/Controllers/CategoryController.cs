@@ -35,6 +35,8 @@ public class CategoryController : Controller
         {
             return showCreateCategoryForm();
         }
+
+        
         var category = _category.GetCategory(model.CategoryId);
         // Category should be created
         if (category == null)

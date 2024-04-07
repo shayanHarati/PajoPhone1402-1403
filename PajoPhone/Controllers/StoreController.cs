@@ -218,7 +218,7 @@ public class StoreController : Controller
     private StoreViewModel Search(FilterViewModel model)
     {
         var products = _product.FilterProducts(model.ProductName,
-            model.ProductPriceMax, model.ProductPriceMin);
+            model.ProductPriceMax, model.ProductPriceMin,model.CategoryList.SelectedCategories,model.SelectedFields);
         StoreViewModel createdModel = new StoreViewModel()
         {
             Products = products,

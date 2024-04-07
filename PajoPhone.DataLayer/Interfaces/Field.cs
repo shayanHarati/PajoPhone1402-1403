@@ -17,4 +17,9 @@ public class Field:IField
         _context.Fields.Add(field);
         _context.SaveChanges();
     }
+
+    public bool ExistField(string title)
+    {
+        return _context.Fields.Any(c => c.FieldTitle == title);
+    }
 }
