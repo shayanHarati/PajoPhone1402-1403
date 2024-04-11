@@ -1,7 +1,7 @@
 function reformat(){
     ans = []
     if($("#demo").val()!=""){
-        var number = $("#demo").val().replaceAll(",","")
+        var number = $("#demo").val().toString().replace(",","")
         var number_cop= number
         while(number>=1000){
             if (number%1000==0){
