@@ -9,4 +9,5 @@ public interface ICategory
     int GetLevel(int id);
     int CreateCategory(Models.Category category);
     void UpdateCategory(Models.Category newCategory);
+    List<int> GetIdsOfParents(int id);
 }

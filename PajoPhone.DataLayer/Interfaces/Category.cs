@@ -35,4 +35,19 @@ public class Category:ICategory
         _context.Category.Update(newCategory);
         _context.SaveChanges();
     }
+
+    public List<int> GetIdsOfParents(int id)
+    {
+        List<int> ids = new List<int>();
+        ids.Add(id);
+        var level = _context.Category.SingleOrDefault(c => c.Id == id).Level;
+        for (int i = level-1; i >= 0; i--)
+        {
+            var parentId = Convert.ToInt32(_context.Category.SingleOrDefault(c => c.Id == id).PrentCategoryId);
+            ids.Add(parentId);
+            id = _context.Category.SingleOrDefault(c => c.Id == parentId).Id;
+        }
+
+        return ids;
+    }
 }

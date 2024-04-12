@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using PajoPhone.Datalayer.Models;
+using PajoPhone.DataLayer.Models;
 
 namespace PajoPhone.ViewModels;
 
@@ -8,6 +9,7 @@ public class CreateOrEditProductViewModel
     public CreateOrEditProductViewModel()
     {
         CategoryList = new CategoriesListViewModel();
+        Dynamics = new List<FieldProduct>();
     }
     public int Id { get; set; }
     
@@ -40,4 +42,5 @@ public class CreateOrEditProductViewModel
     public  IFormFile Image { get; set; }
 
     public CategoriesListViewModel CategoryList { set; get; }
+    public List<FieldProduct> Dynamics { get; set; }
 }

@@ -5,39 +5,42 @@
         <form enctype="multipart/form-data" asp-action="CreateOrEditProduct" asp-controller="Store" method="post" class="flex border-2 border-slate-600 lg:m-3 border-dotted flex-col xl:flex-row lg:justify-between">
             <div>
                 <div class="flex flex-col">
-                                <label class="m-2 text-white" asp-for="Image"></label>
-                                @if (Model.ImageProduct == null)
-                                {
-                                    <input  class=" p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" type="file" asp-for="Image"/>
-                                    <input asp-for="ImageProduct" value="Default.jpg" type="hidden"/>
-                                }
-                                else
-                                {
-                                    <img src="@("/images/" + Model.ImageProduct)" />
-                                    <input class=" p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300"  asp-for="Image"/>
-                                    <input asp-for="ImageProduct" type="hidden"/>
-                                }
-                                <span class="error" asp-validation-for="Image" ></span>
-                         </div>
-                <div class="flex flex-col">
-                            <div class="flex flex-col">
-                                <label class="m-2 text-white" asp-for="ProductName" for="Name"></label>
-                                <input class="p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" asp-for="ProductName" id="Name" type="text">
-                                <span class="error" asp-validation-for="ProductName"></span>
-                            </div>
-                            <div class="flex flex-col">
-                                <label class="m-2 text-white" asp-for="ProductPrice" for="Price"></label>
-                                <input  class="numeric p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" asp-for="ProductPrice" id="demo" type="text" min="0">
-                             <span class="error" asp-validation-for="ProductPrice"></span>
-                                </div>
-                            <div class="flex flex-col">
-                                <label class="m-2 text-white" asp-for="ProductColor" for="Color"></label>
-                                <input class="p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" asp-for="ProductColor" id="Color" type="text">
-                                <span class="error" asp-validation-for="ProductColor"></span>
-                            </div>
-                                   
-                        </div>
+                    <label class="m-2 text-white" asp-for="Image"></label>
+                    @if (Model.ImageProduct == null)
+                    {
+                        <input  class=" p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" type="file" asp-for="Image"/>
+                        <input asp-for="ImageProduct" value="Default.jpg" type="hidden"/>
+                    }
+                    else
+                    {
+                        <img src="@("/images/" + Model.ImageProduct)" />
+                        <input class=" p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300"  asp-for="Image"/>
+                        <input asp-for="ImageProduct" type="hidden"/>
+                    }
+                    <span class="error" asp-validation-for="Image" ></span>
+                </div>
+                <div  class="flex flex-col">
+                    <div class="flex flex-col">
+                        <label class="m-2 text-white" asp-for="ProductName" for="Name"></label>
+                        <input class="p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" asp-for="ProductName" id="Name" type="text">
+                        <span class="error" asp-validation-for="ProductName"></span>
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="m-2 text-white" asp-for="ProductPrice" for="Price"></label>
+                        <input  class="numeric p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" asp-for="ProductPrice" id="demo" type="text" min="0">
+                        <span class="error" asp-validation-for="ProductPrice"></span>
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="m-2 text-white" asp-for="ProductColor" for="Color"></label>
+                        <input class="p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" asp-for="ProductColor" id="Color" type="text">
+                        <span class="error" asp-validation-for="ProductColor"></span>
+                    </div>
+                            
+                </div>
+                <div id="ProductAtt">
+                </div>
             </div>
+            
             <div class="flex flex-col md:justify-around">
                 <div class="flex flex-col mb-2">
                     <label class="m-2 text-white" asp-for="ProductDescription" for="Description"></label>
@@ -66,4 +69,71 @@
 {
     <script src="/js/AutomaticLists.js"></script>
     <script src="/js/MoneySeprator.js"></script>
+    <script >
+        
+        function make_dynamic(status,e){
+            alert("salam")
+            if (status){
+              var url=  "/Field/GetAllFields/"+$(rad[e]).val()
+            }else{
+                debugger
+                if ($("div.ul input:radio:checked").length!=0){
+                    var url= "/Field/GetAllFields/"+$("div.ul input:radio:checked").val()
+                }else{
+                    return 0;
+                }
+            }
+            $.ajax({
+            url:url,
+            methode:"GET"
+            }).done((res)=>{
+                     console.log($(res)[0]["dynamicFields"])
+                                $($(res)[0]["dynamicFields"]).each((elm)=>{
+                                    var div = document.createElement("div")
+                                    $(div).addClass("flex flex-col")
+                                    var label = document.createElement("label")
+                                    $(label).addClass("m-2 text-white")
+                                    $(label).text($($(res)[0]["dynamicFields"][elm]).prop("fieldTitle"))
+                                    $(div).append(label)
+                                    var input=document.createElement("input");
+                                    $(input).attr("asp-for","Dynamics["+elm+"].Value")
+                                    $(input).addClass("p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300")
+                                    if ($($(res)[0]["dynamicFields"][elm]).prop("type")==2){
+                                        $(input).attr("type","number");
+                                    }else if ($($(res)[0]["dynamicFields"][elm]).prop("type")==1){
+                                        // money
+                                        $(input).attr("type","text");
+                                    }else if ($($(res)[0]["dynamicFields"][elm]).prop("type")==0){
+                                         // string
+                                         $(input).attr("type","text");
+                                     }
+                                    else if ($($(res)[0]["dynamicFields"][elm]).prop("type")==3){
+                                         // date
+                                         $(input).attr("type","datetime");
+                                     }
+                                
+                                    $(div).append(input)
+                                    var field_id_input=document.createElement("input")
+                                    $(field_id_input).attr("name","Dynamics["+elm+"].FieldId")
+                                    $(field_id_input).val($($(res)[0]["dynamicFields"][elm]).prop("id"))
+                                    $(div).append(field_id_input)
+                                    console.log(div)
+                                    $("#ProductAtt").append(div)
+                                })
+                })
+           
+        }
+        
+        var rad = $("div.ul input:radio")
+        $(document).ready(()=>{
+            make_dynamic(false)
+            })
+        rad.each((e)=>{
+            $(rad[e]).change((el)=>{
+                $("#ProductAtt").empty()
+                make_dynamic(true,e)
+                })
+            })
+        
+    </script>
 }

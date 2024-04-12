@@ -1,20 +1,29 @@
 using Microsoft.AspNetCore.Mvc;
+using PajoPhone.DataLayer.Interfaces;
 using PajoPhone.ViewModels;
 
 namespace PajoPhone.Controllers;
 
 public class FieldController : Controller
 {
-    [HttpGet]
-    public IActionResult CreateField()
+    private IField _field;
+    private ICategory _category;
+    public FieldController(IField field,ICategory category)
     {
-        return View();
+        _field = field;
+        _category = category;
+    }
+    [HttpGet]
+    public IActionResult GetAllFields(int id)
+    {
+        var sub = _category.GetIdsOfParents(id);
+        var model = new FieldsViewModel()
+        {
+            DynamicFields = _field.GetFieldOfCategory(sub).ToList()
+        };
+        return Json(model);
     }
     
-    [HttpPost]
-    public IActionResult CreateField(CreateFieldViewModel model)
-    {
-        return View();
-    }
+    
     
 }
