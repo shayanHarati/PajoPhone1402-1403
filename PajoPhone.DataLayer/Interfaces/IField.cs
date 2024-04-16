@@ -8,4 +8,7 @@ public interface IField
     void CreateField(Models.Field field);
     bool ExistField(string title);
     IEnumerable<Models.Field> GetFieldOfCategory(List<int> id);
+    Models.Field GetFieldById(int id);
+    void CreateFieldProduct(FieldProduct field);
+    IEnumerable<Models.FieldProduct> GetFieldsProduct(int id);
 }

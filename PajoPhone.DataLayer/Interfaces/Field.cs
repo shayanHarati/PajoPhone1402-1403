@@ -47,4 +47,20 @@ public class Field:IField
 
         return fields;
     }
+
+    public Models.Field GetFieldById(int id)
+    {
+        return _context.Fields.SingleOrDefault(c => c.Id == id);
+    }
+
+    public void CreateFieldProduct(FieldProduct field)
+    {
+        _context.FieldProducts.Add(field);
+        _context.SaveChanges();
+    }
+
+    public IEnumerable<FieldProduct> GetFieldsProduct(int id)
+    {
+        return _context.FieldProducts.Where(c => c.ProductId == id);
+    }
 }

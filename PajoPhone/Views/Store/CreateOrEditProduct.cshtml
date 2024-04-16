@@ -38,6 +38,15 @@
                             
                 </div>
                 <div id="ProductAtt">
+                    @for (int field = 0; field < Model.Dynamics.Count(); field++)
+                    {
+                        <div class="flex flex-col">
+                            <label class="m-2 text-white"  for="Color">@Model.Dynamics[field].Field.FieldTitle</label>
+                            <input class="p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" asp-for="Dynamics[field].Value" id="Color" type="text">
+                            <input asp-for="Dynamics[field].FieldId">
+                            @* <span class="error" asp-validation-for="ProductColor"></span> *@
+                        </div>
+                    }
                 </div>
             </div>
             
@@ -72,7 +81,7 @@
     <script >
         
         function make_dynamic(status,e){
-            alert("salam")
+            
             if (status){
               var url=  "/Field/GetAllFields/"+$(rad[e]).val()
             }else{
@@ -96,7 +105,7 @@
                                     $(label).text($($(res)[0]["dynamicFields"][elm]).prop("fieldTitle"))
                                     $(div).append(label)
                                     var input=document.createElement("input");
-                                    $(input).attr("asp-for","Dynamics["+elm+"].Value")
+                                    $(input).attr("name","Dynamics["+elm+"].Value")
                                     $(input).addClass("p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300")
                                     if ($($(res)[0]["dynamicFields"][elm]).prop("type")==2){
                                         $(input).attr("type","number");
@@ -116,6 +125,7 @@
                                     var field_id_input=document.createElement("input")
                                     $(field_id_input).attr("name","Dynamics["+elm+"].FieldId")
                                     $(field_id_input).val($($(res)[0]["dynamicFields"][elm]).prop("id"))
+                                    $(field_id_input).attr("type","hidden")
                                     $(div).append(field_id_input)
                                     console.log(div)
                                     $("#ProductAtt").append(div)
@@ -125,9 +135,9 @@
         }
         
         var rad = $("div.ul input:radio")
-        $(document).ready(()=>{
-            make_dynamic(false)
-            })
+        // $(document).ready(()=>{
+        //     make_dynamic(false)
+        //     })
         rad.each((e)=>{
             $(rad[e]).change((el)=>{
                 $("#ProductAtt").empty()

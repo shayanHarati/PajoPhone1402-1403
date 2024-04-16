@@ -54,7 +54,8 @@ public class StoreController : Controller
             ImageProduct = model.ImageProduct,
             ProductColor = model.ProductColor,
             ProductDescription = model.ProductDescription,
-            Image = model.Image
+            Image = model.Image,
+            Dynamics = model.Dynamics
         };
         vm.CategoryList.Categories = _category.GetAllCategories().ToList();
         vm.CategoryList.SelectedCategories = model.CategoryList.SelectedCategories;
@@ -84,6 +85,11 @@ public class StoreController : Controller
         }
         else
         {
+            var fields = _field.GetFieldsProduct(pid).ToList();
+            foreach (var field in fields)
+            {
+                field.Field = _field.GetFieldById(field.FieldId);
+            }
             // if product was  in database => we should update it
             CreateOrEditProductViewModel model = new CreateOrEditProductViewModel()
             {
@@ -92,6 +98,7 @@ public class StoreController : Controller
                 ImageProduct = _product.GetById(pid).ImageProduct,
                 ProductColor = _product.GetById(pid).ProductColor,
                 ProductDescription = _product.GetById(pid).ProductDescription,
+                Dynamics = fields,
                 ProductPrice = (_product.GetById(pid).ProductPrice).ToString().Replace(",","")
             };
             model.CategoryList.SelectedCategories.Add(_product.GetById(pid).CategoryId);
@@ -136,6 +143,10 @@ public class StoreController : Controller
         }
         if (!ModelState.IsValid)
         {
+            foreach (var dynamic in model.Dynamics)
+            {
+                dynamic.Field = _field.GetFieldById(dynamic.FieldId);
+            }
             return showCreateOrEdit(model);
         }
         if (_product.ExistProduct(model.ProductName) && _product.GetIdByName(model.ProductName)!= model.Id)
@@ -162,7 +173,12 @@ public class StoreController : Controller
             product.ImageProduct = imageName;
             model.ImageProduct = imageName;
             _product.UpdateProduct(product);
-            
+
+            foreach (var dynamic in model.Dynamics)
+            {
+                dynamic.ProductId = id;
+                _field.CreateFieldProduct(dynamic);
+            }
 
             FilterViewModel vm = new FilterViewModel();
             vm.ProductName = model.ProductName;
