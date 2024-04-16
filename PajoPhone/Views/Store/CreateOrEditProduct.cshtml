@@ -43,7 +43,7 @@
                         <div class="flex flex-col">
                             <label class="m-2 text-white"  for="Color">@Model.Dynamics[field].Field.FieldTitle</label>
                             <input class="p-2 m-2 w-11/12 bg-slate-950 rounded border-2 border-slate-300 text-slate-300" asp-for="Dynamics[field].Value" id="Color" type="text">
-                            <input asp-for="Dynamics[field].FieldId">
+                            <input asp-for="Dynamics[field].FieldId" type="hidden">
                             @* <span class="error" asp-validation-for="ProductColor"></span> *@
                         </div>
                     }

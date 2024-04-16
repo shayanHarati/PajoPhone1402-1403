@@ -46,7 +46,7 @@ public class Product:IProduct
         selectedProduct4= _filterCategories(categoriesIds.Distinct().ToList()).ToList();
         if (selectedProduct.Count()==0)
         {
-            if ((selectedProduct3.Union(selectedProduct4)).Count()==0)
+            if ((selectedProduct3.Union(selectedProduct4)).Count()==0 && categoriesId.Count()==0 && fields.Count()==0)
             {
                 return selectedProduct2.ToList();
             }
@@ -58,7 +58,7 @@ public class Product:IProduct
         }
         else
         {
-            if ((selectedProduct3.Union(selectedProduct4)).Count()==0)
+            if ((selectedProduct3.Union(selectedProduct4)).Count()==0 && categoriesIds.Count()==0 && fields.Count()==0)
             {
                 return selectedProduct.Intersect(selectedProduct2).ToList();
             }
